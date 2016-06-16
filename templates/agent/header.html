@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>CMS Agent - {@firstname} {@lastname}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/functions.js"></script>
+		<script>
+			$(document).ready(function(){
+        $(".nav-main a").on("mouseover", function(){
+          $(".nav-main").find(".active").removeClass("active");
+          $(this).parent().addClass("active");
+        });
+        $(".nav-main a").on("mouseleave", function(){
+          $(".nav-main").find(".active").removeClass("active");
+        });
+
+        $(".navbar-opacity").on("mouseover", function(){
+          $(".navbar-opacity").stop(true,true);
+          $(".navbar-opacity").css("opacity","1");
+        });
+        $(".navbar-opacity").on("mouseleave", function(){
+          $(".navbar-opacity").animate({opacity: 0.3},{duration: 10000});
+        });
+			});
+		</script>
+		
+  </head>
+
+  <body>
+    <!--TOP NAV--/-->
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-opacity">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          <a class="navbar-brand" href="?show=dashboard" class="linkto" name="scripts/agent/dashboard.php" id="togglemenu"><span class="glyphicon glyphicon-home"></span></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right nav-main">
+						<li><a href="?show=fl"><span class="glyphicon glyphicon-saved"></span> Fresh Leads</a></li>
+						<li><a href="?show=Call_Back"><span class="glyphicon glyphicon-earphone"></span> Call Back</a></li>
+						<li><a href="?show=Referal"><span class="glyphicon glyphicon-export"></span> Referals</a></li>
+						<li><a href="?show=Verified"><span class="glyphicon glyphicon-floppy-saved"></span> Full Ver</a></li>
+						<li><a href="?show=Turn-In"><span class="glyphicon glyphicon-transfer"></span> Turn-In</a></li>
+						<li><a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-stats"></span> AppCanDec <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="?show=Approved"><span class="glyphicon glyphicon-plus"></span> Approved</a></li>
+                <li><a href="?show=Cancelled"><span class="glyphicon glyphicon-minus"></span> Cancelled</a></li>
+                <li><a href="?show=Declined"><span class="glyphicon glyphicon-remove"></span> Declined</a></li>    
+              </ul>
+            </li>
+            <li><a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-ok-circle"></span> Contacted <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="?show=Card_Holder"><span class="glyphicon glyphicon-menu-right"></span> Card Holder</a></li>
+                <li><a href="?show=Not_Interested"><span class="glyphicon glyphicon-menu-right"></span> Not Interested</a></li>
+                <li><a href="?show=Not_Qualified"><span class="glyphicon glyphicon-menu-right"></span> Not Qualified</a></li>
+                <li><a href="?show=Retired"><span class="glyphicon glyphicon-menu-right"></span> Retired</a></li>
+                <li><a href="?show=Unemployed"><span class="glyphicon glyphicon-menu-right"></span> Unemployed</a></li>
+                <li><a href="?show=Verification_Not_Allowed"><span class="glyphicon glyphicon-menu-right"></span> Verification Not Allowed</a></li>
+                <li><a href="?show=Others_-_Contacted"><span class="glyphicon glyphicon-menu-right"></span> Others - Contacted</a></li>    
+              </ul>
+            </li>
+            <li><a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-remove-circle"></span> Uncontacted <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="?show=Keeps_On_Ringing"><span class="glyphicon glyphicon-menu-right"></span> Keeps On Ringing</a></li>
+                <li><a href="?show=Phone_Busy"><span class="glyphicon glyphicon-menu-right"></span> Phone Busy</a></li>
+                <li><a href="?show=Fax_Tone"><span class="glyphicon glyphicon-menu-right"></span> Fax Tone</a></li>
+                <li><a href="?show=Not_Available"><span class="glyphicon glyphicon-menu-right"></span> Not Available</a></li>
+                <li><a href="?show=Not_In_Service"><span class="glyphicon glyphicon-menu-right"></span> Not In Service</a></li>
+                <li><a href="?show=Number_Incorrect"><span class="glyphicon glyphicon-menu-right"></span> Number Incorrect</a></li>
+                <li><a href="?show=Others_-_Uncontacted"><span class="glyphicon glyphicon-menu-right"></span> Others - Uncontacted</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>

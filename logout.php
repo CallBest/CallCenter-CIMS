@@ -10,6 +10,7 @@ if ($cookie->check()) {
 	$userid = $cookie->array['userid'];
   $profile = new UserClass();
   $profile->dologout($userid);
+	$cookie->deletecookies();
   header('Location: index.php');
 } else {
   header('Location: index.php');

@@ -1,0 +1,54 @@
+<br/>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-10 cols-xs-offset-1 col-md-10 col-md-offset-1">
+      <div class="panel panel-primary">
+        <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> User Settings</div>
+        <div class="panel-body">
+          <div class="col-sm-10 col-sm-offset-1">
+            <h4>Change password</h4>
+            <hr/>
+          </div>
+          <form class="form-horizontal" method="POST" action="scripts/agent/savepassword.php" onsubmit="return checkPasswords();">
+            <div class="form-group">
+              <label for="oldpass" class="col-sm-5 control-label">Old password</label>
+              <div class="col-sm-3">
+                <input type="password" class="form-control" id="oldpass" name="oldpass" maxlength="50" onkeyup="this.value=ValidCharsAlphaNumeric(this.value)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newpass" class="col-sm-5 control-label">New password</label>
+              <div class="col-sm-3">
+                <input type="password" class="form-control" id="newpass" name="newpass" maxlength="50" onkeyup="this.value=ValidCharsAlphaNumeric(this.value)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newpassrepeat" class="col-sm-5 control-label">Repeat new password</label>
+              <div class="col-sm-3">
+                <input type="password" class="form-control" id="newpassrepeat" name="newpassrepeat" maxlength="50" onkeyup="this.value=ValidCharsAlphaNumeric(this.value)">
+              </div>
+            </div>
+            <div>
+              <label class="col-sm-10 col-sm-offset-1 control-label"><font color="red">{@msg}</font></label>
+            </div>
+            <div class="col-sm-10 col-sm-offset-1">
+              <hr/>
+              <div class="col-sm-6">
+                <p align="left">
+                  <input type="button" class="btn btn-danger" value="Cancel" onclick="javascript:window.location='{@mainpage}';">
+                </p>
+              </div>
+              <div class="col-sm-6">
+                <p align="right">
+                  <input type="hidden" id="userid" name="userid" value="{@userid}">
+                  <input type="submit" class="btn btn-success" value="Save">
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<br/>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-10 cols-xs-offset-1 col-md-10 col-md-offset-1">
+      <div>
+        <h4 align="right">
+          <a href="?show=search"><span class="glyphicon glyphicon-search"></span> Search lead </a> | 
+          <a href="?show=settings"><span class="glyphicon glyphicon-cog"></span> User settings </a> | 
+          <a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+        </h4>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span> Today's Production ({@currentdate})</div>
+        <div class="panel-body form-horizontal">
+          <div class="col-xs-6">
+            <label class="control-label">Leads disposed: {@todaydisposed}</label>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="{@todaydisposed}" aria-valuemin="0" aria-valuemax="250" style="width:{@todaydisposedwidth}%">
+                <span class="sr-only">Leads disposed: {@todaydisposed}</span>
+                {@todaydisposedwidth}%
+              </div>
+            </div>
+            <label class="control-label">Contacted: {@todaycontacted}</label>
+            <div class="progress">
+              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{@todaycontacted}" aria-valuemin="0" aria-valuemax="{@todaytotal}" style="width:{@todaycontactedwidth}%">
+                <span class="sr-only">Contacted: {@todaycontacted}</span>
+                {@todaycontactedwidth}%
+              </div>
+            </div>
+            <label class="control-label">Uncontacted: {@todayuncontacted}</label>
+            <div class="progress">
+              <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{@todaycontacted}" aria-valuemin="0" aria-valuemax="{@todaytotal}" style="width:{@todayuncontactedwidth}%">
+                <span class="sr-only">Uncontacted: {@todayuncontacted}</span>
+                {@todayuncontactedwidth}%
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-6">
+            <label class="control-label">Verifications: {@todayverified}</label>
+            <div class="progress">
+              <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{@todayverified}" aria-valuemin="0" aria-valuemax="25" style="width:{@todayverifiedwidth}%">
+                <span class="sr-only">Verifications: {@todayverified}</span>
+                {@todayverifiedwidth}%
+              </div>
+            </div>
+            <label class="control-label">Turn-ins: {@todayturnin}</label>
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{@todayturnin}" aria-valuemin="0" aria-valuemax="15" style="width:{@todayturninwidth}%">
+                <span class="sr-only">Turn-ins: {@todayturnin}</span>
+                {@todaycontactedwidth}%
+              </div>
+            </div>
+            <label class="control-label">Approvals: {@todayapproved}</label>
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{@todayapproved}" aria-valuemin="0" aria-valuemax="5" style="width:{@todayapprovedwidth}%">
+                <span class="sr-only">Approvals: {@todayapproved}</span>
+                {@todaycontactedwidth}%
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <p align="right">Stats generated on {@todaydateupdated}. Report will be updated in {@todaynextupdate}.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@
  *------------------------------------------------------
  */
  
-define("CRYPT_KEY", "good show!");
+define("CRYPT_KEY", "merchantsrock");
 
 class Encryption {
 	function encode($string) {
@@ -16,7 +16,7 @@ class Encryption {
 	}
 	
 	function oneway_encode($string) {
-		return crypt(md5($string), md5($string));
+		return crypt(md5(CRYPT_KEY), md5($string));
 	}
 }
 

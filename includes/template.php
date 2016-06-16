@@ -5,7 +5,7 @@ class Template {
 	protected $values = array();
 	var $output;
 
-	public function __construct($file) {
+	public function set_template($file) {
 			$this->file = $file;
 			if (!file_exists($this->file)) {
 					return "Error loading template file ($this->file).<br />";
@@ -28,21 +28,32 @@ class Template {
 			}
 	}
 
-	public function loop($tag,$array) {
-			if (is_array($array)) {
-					$list = "";
-					preg_match_all("/<loop ".$tag.">(.*)<\/loop>/s",$this->output, $tloop);
-					foreach ($array as $arrkey => $arrval) {
-							$temp = $tloop[0][0];
-							foreach ($arrval as $field => $tablevalue) {
-									$tagToReplace = "{@$field}";
-									$temp = str_replace($tagToReplace, $tablevalue, $temp);
-							}   
-							$list .= $temp;
+	function template_loop($tag,$array,$ads=""){
+		// TEMPLATE DURING THE LOOP
+		ereg("<loop $tag>(.*)</loop $tag>",$this->output, $tloop);
+					
+		if (is_array($array)) {
+			$ret = '';
+			foreach($array as $key => $arr) {
+				$temp = $tloop[1];	
+				
+				foreach ($arr as $arkey => $arval) {
+					$temp = str_replace("{@".$arkey."}", $arval, $temp);
+				}
+				$ret .= $temp;
+				//	INSERT ADS
+				if($ads){
+					$i++;
+					$d=(count($array)/2);
+					if($i==$d||$i==($d+0.5)){
+						$ret.=$ads;
 					}
+				}
 			}
-			
-			$this->output = str_replace($tloop[0][0],$list,$this->output);
+		} else {
+			$ret=$ads;
+		}			
+		$this->output=str_replace($tloop[0], $ret, $this->output);  	  
 	}
 
 	public function create() {
@@ -51,7 +62,7 @@ class Template {
 					$this->output = str_replace($tagToReplace, $value, $this->output);
 			}
 	  
-			echo $this->output;
+			return $this->output;
 	}
 	
 }

@@ -9,10 +9,12 @@ $cookie = new CookieInfo("CMS");
 
 if ($cookie->check()) {
 	$cookie->getcookies();
-	$body->add_key('realname',$cookie->array['realname']);
+	$body->add_key('firstname',$cookie->array['firstname']);
+	$body->add_key('lastname',$cookie->array['lastname']);
 }
 
 if (isset($_REQUEST['show'])) {
+  $show = $_REQUEST['show'];
   if (isset($_REQUEST['act'])) {
     $act = $_REQUEST['act'];
   } else {
@@ -22,6 +24,8 @@ if (isset($_REQUEST['show'])) {
     case 'users':
       switch ($act) {
         case 'add':
+          $content = new Template('templates/admin/adduser.html');
+          $body->add_key('content',$content->create());
           break;
         case 'edit':
           break;
@@ -33,7 +37,7 @@ if (isset($_REQUEST['show'])) {
         
       }
       break;
-    case 'teams':
+    case 'departments':
       switch ($act) {
         case 'add':
           break;
@@ -47,7 +51,7 @@ if (isset($_REQUEST['show'])) {
         
       }
       break;
-    case 'campaigns':
+    case 'customers':
       switch ($act) {
         case 'add':
           break;
@@ -61,7 +65,7 @@ if (isset($_REQUEST['show'])) {
         
       }
       break;
-    case 'lists':
+    case 'jobs':
       switch ($act) {
         case 'add':
           break;
@@ -75,21 +79,7 @@ if (isset($_REQUEST['show'])) {
         
       }
       break;
-    case 'dispositions':
-      switch ($act) {
-        case 'add':
-          break;
-        case 'edit':
-          break;
-        case 'delete':
-          break;
-        case 'search':
-          break;
-        default:
-        
-      }
-      break;
-    case 'reports':
+    case 'statuses':
       switch ($act) {
         case 'add':
           break;
@@ -107,9 +97,10 @@ if (isset($_REQUEST['show'])) {
       
   }
 } else {
-  $body->add_key('content','USERS');
+  $content = new Template('templates/admin/dashboard.html');
+  $body->add_key('content',$content->create());
 }
 
-$body->create();
+echo $body->create();
 
 ?>

@@ -1,0 +1,1402 @@
+<style>
+  .tab-panel {
+    display: block;
+    height:60vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width:100%;
+    border: 1px solid #22c;
+    border-radius: 3px;
+  }
+  #contactinfo{
+	  background-color: steelblue;
+  }
+  #personalinfo{
+    background-color: darkseagreen;
+  }
+  #employmentinfo{
+    background-color: floralwhite;
+  }
+  #ccinfo{
+    background-color: lightslategray;
+  }
+  #spouseinfo{
+    background-color: lightpink;
+  }
+  #suppinfo{
+    background-color: sandybrown;
+  }
+  #personalref{
+    background-color: lightgray;
+  }
+  #cardchoices{
+    background-color: lightsteelblue;
+  }
+  section {
+    padding: 20px 0 20px 0;
+  }
+
+</style>
+<script>
+  $(document).ready(function(){
+    $('.tab-panel').scrollspy({ target: '#sidenav' });
+    $(".nav-info a").on("click", function(){
+      $(".nav-info").find(".active").removeClass("active");
+      $(this).parent().addClass("active");
+    });
+  });  
+</script>
+
+<div class="container">
+  <h3><strong>{@completename}</strong></h3>
+  <hr class="spacer"/>
+
+  <form class="form-horizontal" method="POST" action="scripts/agent/savevalues.php" onsubmit="return checkValues();">
+    <input type="hidden" id="agent" name="agent" value="{@userid}">
+    <input type="hidden" id="workingfolder" name="workingfolder" value="{@workingfolder}">
+    <input type="hidden" id="leadid" name="leadid" value="{@leadid}">
+    <input type="hidden" id="exten" name="exten" value="{@extension}">
+    <input type="hidden" id="host" name="host" value="{@hostaddress}">
+    <input type="hidden" id="callstatus" name="callstatus" value="1">
+    <div class="row">
+      <div id="sidenav" class="col-xs-4 col-md-3">
+        <h5><strong>{@completename}</strong></h5>
+        <hr class="spacer"/>
+        <ul class="nav nav-pills nav-stacked nav-info">
+          <li class="active"><a href="#contactinfo">Contact Numbers</a></li>
+          <li><a href="#personalinfo">Personal Information</a></li>
+          <li><a href="#employmentinfo">Employment Information</a></li>
+          <li><a href="#ccinfo">Credit Card Information</a></li>
+          <li><a href="#spouseinfo">Spouse Details</a></li>
+          <li><a href="#suppinfo">Supplementary Card</a></li>
+          <li><a href="#personalref">Personal Reference</a></li>
+          <li><a href="#cardchoices">Credit Card Choices</a></li>
+        </ul>
+      </div>
+      <div class="col-xs-8 col-md-9">
+        <div class="tab-panel" data-offset='120' data-spy="scroll" data-target="#sidenav">
+
+          <section id="contactinfo">
+            <div class="col-sm-12">
+              <hr/>
+              <h4>Contact Numbers</h4>
+              <hr/>
+            </div>
+            <div class="row">             
+              <div class="col-sm-10 col-sm-offset-1"> Assigned extension: SIP/{@extension}<hr></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-1">
+                Label / Phone number (select from options):<br/>
+                <loop phonenumbers>
+                  <select name="{@phonenumber}" id="{@phonenumber}" class="rounded">
+                    <option value="{@phonedispo}">{@phonedispo}</option>
+                    <option value="Office">Office</option>
+                    <option value="Home">Home</option>
+                    <option value="Mobile">Mobile</option>
+                    <option value="Keeps on Ringing">Keeps on Ringing</option>
+                    <option value="Phone Busy">Phone Busy</option>
+                    <option value="Not Accessible">Not Accessible</option>
+                    <option value="Not in Service">Not in Service</option>
+                    <option value="Wrong Number">Wrong Number</option>
+                    <option value="Others - Uncontacted">Others - Uncontacted</option>
+                  </select>
+                  <input type="radio" id="rad{@phonenumber}" name="contact" value="{@phonenumber}" onclick="document.getElementById('selectednum').value=this.value;">
+                  <label for="rad{@phonenumber}">{@phonenumber}</label>
+                </loop phonenumbers>
+              </div>           
+              <div class="col-sm-4">
+                Number to dial:<br/>
+                <input type="text" id="selectednum" class="form-control" readonly><br/>
+                <input type="button" id="dial" value="Dial" class="btn btn-success pull-right" onclick="Dial();">
+              </div>
+            </div>
+          </section>
+
+          <section id="personalinfo">
+            <div class="col-sm-12">
+              <hr/>
+              <h4>Personal Information</h4>
+              <hr/>
+            </div>
+            <div class="form-group">
+              <label for="clfirstname" class="col-sm-4 control-label"><font color="red" size="+1">*</font> First name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="clfirstname" name="clfirstname" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@clfirstname}" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="clmiddlename" class="col-sm-4 control-label">Middle name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="clmiddlename" name="clmiddlename" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@clmiddlename}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cllastname" class="col-sm-4 control-label"><font color="red" size="+1">*</font> Last name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="cllastname" name="cllastname" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@cllastname}" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="dobm" class="col-sm-4 control-label"><font color="red" size="+1">*</font> Date of birth</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="dobm" name="dobm" required>
+                  <option value="{@dobm}">{@dobm}</option>
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" id="dobd" name="dobd" required>
+                  <option value="{@dobd}">{@dobd}</option>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" id="doby" name="doby" required>
+                  <option value="{@doby}">{@doby}</option>
+                  <option value="1941">1941</option>
+                  <option value="1942">1942</option>
+                  <option value="1943">1943</option>
+                  <option value="1944">1944</option>
+                  <option value="1945">1945</option>
+                  <option value="1946">1946</option>
+                  <option value="1947">1947</option>
+                  <option value="1948">1948</option>
+                  <option value="1949">1949</option>
+                  <option value="1950">1950</option>
+                  <option value="1951">1951</option>
+                  <option value="1952">1952</option>
+                  <option value="1953">1953</option>
+                  <option value="1954">1954</option>
+                  <option value="1955">1955</option>
+                  <option value="1956">1956</option>
+                  <option value="1957">1957</option>
+                  <option value="1958">1958</option>
+                  <option value="1959">1959</option>
+                  <option value="1960">1960</option>
+                  <option value="1961">1961</option>
+                  <option value="1962">1962</option>
+                  <option value="1963">1963</option>
+                  <option value="1964">1964</option>
+                  <option value="1965">1965</option>
+                  <option value="1966">1966</option>
+                  <option value="1967">1967</option>
+                  <option value="1968">1968</option>
+                  <option value="1969">1969</option>
+                  <option value="1970">1970</option>
+                  <option value="1971">1971</option>
+                  <option value="1972">1972</option>
+                  <option value="1973">1973</option>
+                  <option value="1974">1974</option>
+                  <option value="1975">1975</option>
+                  <option value="1976">1976</option>
+                  <option value="1977">1977</option>
+                  <option value="1978">1978</option>
+                  <option value="1979">1979</option>
+                  <option value="1980">1980</option>
+                  <option value="1981">1981</option>
+                  <option value="1982">1982</option>
+                  <option value="1983">1983</option>
+                  <option value="1984">1984</option>
+                  <option value="1985">1985</option>
+                  <option value="1986">1986</option>
+                  <option value="1987">1987</option>
+                  <option value="1988">1988</option>
+                  <option value="1989">1989</option>
+                  <option value="1990">1990</option>
+                  <option value="1991">1991</option>
+                  <option value="1992">1992</option>
+                  <option value="1993">1993</option>
+                  <option value="1994">1994</option>
+                  <option value="1995">1995</option>
+                  <option value="1996">1996</option>
+                  <option value="1997">1997</option>
+                  <option value="1998">1998</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="tin" class="col-sm-4 control-label"><font color="red" size="+1">*</font> Tax Identification Number</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="tin" name="tin" maxlength="9" onkeyup="this.value=ValidCharsNumber(this.value); searchTin();" value="{@tin}" required placeholder="(9 digits)">
+              </div>
+              <div class="col-sm-3">
+                <span id="tinstatus"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="sss" class="col-sm-4 control-label">SSS/GSIS number</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="sss" name="sss" maxlength="20" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@sss}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pob" class="col-sm-4 control-label">Place of birth</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="pob" name="pob" maxlength="50" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@pob}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="embossname" class="col-sm-4 control-label" onkeyup="this.value=ValidCharsAlpha(this.value)">Name to appear on card</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="embossname" name="embossname" maxlength="19" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@embossname}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="civilstatus" class="col-sm-4 control-label">Civil status</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="civilstatus" name="civilstatus">
+                  <option value="{@civilstatus}">{@civilstatus}</option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Widowed">Widowed</option>
+                  <option value="Separated">Separated</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="gender" class="col-sm-4 control-label">Gender</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="gender" name="gender">
+                  <option value="{@gender}">{@gender}</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="citizenship" class="col-sm-4 control-label">Nationality/Citizenship</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="citizenship" name="citizenship">
+                  <option value="{@citizenship}">{@citizenship}</option>
+                  <option value="Filipino">Filipino</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mobilephone" class="col-sm-4 control-label">Mobile phone #</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="mobilephone" name="mobilephone" maxlength="10" placeholder="e.g. 9991234567" onkeyup="this.value=ValidCharsPhone(this.value);searchMobile();" value="{@mobilephone}">
+              </div>
+              <div class="col-sm-3">
+                <span id="cpstatus"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="homephone" class="col-sm-4 control-label">Home phone</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="homephone" name="homephone" maxlength="20" placeholder="(Area code) (Phone number) e.g. 029148181" onkeyup="this.value=ValidCharsPhone(this.value)" value="{@homephone}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="permhomephone" class="col-sm-4 control-label">Permanent home phone</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="permhomephone" name="permhomephone" maxlength="20" placeholder="(Area code) (Phone number) e.g. 029148181" onkeyup="this.value=ValidCharsPhone(this.value)" value="{@permhomephone}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="homeaddress1" class="col-sm-4 control-label">Present home address</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="homeaddress1" name="homeaddress1" maxlength="100" placeholder="No. / Street" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@homeaddress1}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="homeaddress2" name="homeaddress2" maxlength="100" placeholder="Brgy. / Village" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@homeaddress2}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="homeaddress3" name="homeaddress3" maxlength="100" placeholder="City" onkeyup="this.value=ValidCharsAddressm(this.value)" value="{@homeaddress3}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="homeaddress4" name="homeaddress4" maxlength="100" placeholder="Province" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@homeaddress4}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="homezipcode" name="homezipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@homezipcode}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="permaddress1" class="col-sm-4 control-label">Permanent home address</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="permaddress1" name="permaddress1" maxlength="100" placeholder="No. / Street" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@permaddress1}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="permaddress2" name="permaddress2" maxlength="100" placeholder="Brgy. / Village" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@permaddress2}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="permaddress3" name="permaddress3" maxlength="100" placeholder="City" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@permaddress3}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="permaddress4" name="permaddress4" maxlength="100" placeholder="Province" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@permaddress4}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="permzipcode" name="permzipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@permzipcode}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="homeownership" class="col-sm-4 control-label">Home ownership</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="homeownership" name="homeownership">
+                  <option value="{@homeownership}">{@homeownership}</option>
+                  <option value="Owned">Owned</option>
+                  <option value="Mortgaged">Mortgaged</option>
+                  <option value="Rented">Rented</option>
+                  <option value="Living with parents/relatives">Living with parents/relatives</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="lengthofstay" class="col-sm-4 control-label">Length of stay</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="lengthofstay" name="lengthofstay" maxlength="2" placeholder="(years)" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@lengthofstay}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="numberofcars" class="col-sm-4 control-label">Number of cars</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="numberofcars" name="numberofcars" maxlength="2" placeholder="" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@numberofcars}">
+              </div>
+              <div class="col-sm-4 form-group">
+                <label for="carmodelyear" class="col-sm-4 col-sm-offset-1 control-label">Model/Year</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="carmodelyear" name="carmodelyear" maxlength="50" placeholder="" onkeyup="this.value=ValidCharsAlphaNumeric(this.value)" value="{@carmodelyear}">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="education" class="col-sm-4 control-label">Education</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="education" name="education">
+                  <option value="{@education}">{@education}</option>
+                  <option value="High School">High School</option>
+                  <option value="Some College">Some College</option>
+                  <option value="College">College</option>
+                  <option value="Post Graduate">Post Graduate</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-sm-4 control-label">Personal e-mail address</label>
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <span class="input-group-addon"> @ </span>
+                  <input type="email" class="form-control" id="email" name="email" maxlength="50" onkeyup="this.value=ValidCharsEmail(this.value)" value="{@email}">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mfmn" class="col-sm-4 control-label">Mother's full maiden name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="mfmn" name="mfmn" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@mfmn}">
+              </div>
+            </div>
+          </section>
+
+          <section id="employmentinfo">
+            <div class="col-sm-12">
+              <hr/>
+              <h4>Employment Information</h4>
+              <hr/>
+            </div>
+            <div class="form-group">
+              <label for="sourceoffunds" class="col-sm-4 control-label">Source of funds</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="sourceoffunds" name="sourceoffunds">
+                  <option value="{@sourceoffunds}">{@sourceoffunds}</option>
+                  <option value="Employment (Private)">Employment (Private)</option>
+                  <option value="Employment (Gov't)">Employment (Gov't)</option>
+                  <option value="Self-employment/Business">Self-employment/Business</option>
+                  <option value="Investments">Investments</option>
+                  <option value="Retired (Pension, etc)">Retired (Pension, etc)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="company" class="col-sm-4 control-label">Company Name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="company" name="company" maxlength="100" onkeyup="this.value=ValidCharsAlphaNumeric(this.value)" value="{@company}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="companyphone" class="col-sm-4 control-label">Company Phone #</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="companyphone" name="companyphone" maxlength="15" onkeyup="this.value=ValidCharsPhone(this.value)" value="{@companyphone}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="companyprovidedphone" class="col-sm-4 control-label">Company Provided Phone #</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="companyprovidedphone" name="companyprovidedphone" maxlength="10" onkeyup="this.value=ValidCharsPhone(this.value)" value="{@companyprovidedphone}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="companyemail" class="col-sm-4 control-label">Company e-mail address</label>
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <span class="input-group-addon"> @ </span>
+                  <input type="email" class="form-control" id="companyemail" name="companyemail" maxlength="50" onkeyup="this.value=ValidCharsEmail(this.value)" value="{@companyemail}">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="empposition" class="col-sm-4 control-label">Position/title</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="empposition" name="empposition" maxlength="100" onkeyup="this.value=ValidCharsAlphaNumeric(this.value)" value="{@empposition}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="emppositiontype" class="col-sm-4 control-label">Position Type</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="emppositiontype" name="emppositiontype">
+                  <option value="{@emppositiontype}">{@emppositiontype}</option>
+                  <option value="Clerk">Clerk</option>
+                  <option value="Officer-Junior/Supervisor">Officer-Junior/Supervisor</option>
+                  <option value="Officer-Senior">Officer-Senior</option>
+                  <option value="Executive">Executive</option>
+                  <option value="Non-Officer">Non-Officer</option>
+                  <option value="OFW">OFW</option>
+                  <option value="Religious">Religious</option>
+                  <option value="Retired">Retired</option>
+                  <option value="Production Worker">Production Worker</option>
+                  <option value="Self-Employed/Proprietor">Self-Employed/Proprietor</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="occupation" class="col-sm-4 control-label">Occupation Category</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="occupation" name="occupation">
+                  <option value="{@occupation}">{@occupation}</option>
+                  <option value="Administrator/Executive">Administrator/Executive</option>
+                  <option value="Agricultural">Agricultural</option>
+                  <option value="Armed Forces/Military">Armed Forces/Military</option>
+                  <option value="Production/Transport">Production/Transport</option>
+                  <option value="Professional/Technical">Professional/Technical</option>
+                  <option value="Clerical">Clerical</option>
+                  <option value="Self-employed">Self-employed</option>
+                  <option value="Sales Worker">Sales Worker</option>
+                  <option value="Service Worker">Service Worker</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="nob" class="col-sm-4 control-label">Major Industry of Business</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="nob" name="nob">
+                  <option value="{@nob}">{@nob}</option>
+                  <option value="Agriculture">Agriculture</option>
+                  <option value="Banking">Banking</option>
+                  <option value="Brokerage">Brokerage</option>
+                  <option value="Business/Commercial Services">Business/Commercial Services</option>
+                  <option value="Communication">Communication</option>
+                  <option value="Community/Social/Personal">Community/Social/Personal</option>
+                  <option value="Construction">Construction</option>
+                  <option value="Consultancy">Consultancy</option>
+                  <option value="Education">Education</option>
+                  <option value="Electricity">Electricity</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Financial Institution">Financial Institution</option>
+                  <option value="Food Industry">Food Industry</option>
+                  <option value="Government Service">Government Service</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                  <option value="Medical Services">Medical Services</option>
+                  <option value="Mining">Mining</option>
+                  <option value="Professional Practice">Professional Practice</option>
+                  <option value="Real Estate">Real Estate</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Utilities">Utilities</option>
+                  <option value="Wholesale and Retail">Wholesale and Retail</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="coaddress1" class="col-sm-4 control-label">Company address</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="coaddress1" name="coaddress1" maxlength="100" placeholder="Department" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@coaddress1}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="coaddress2" name="coaddress2" maxlength="100" placeholder="Floor, Bldg., No., Street, Subd." onkeyup="this.value=ValidCharsAddress(this.value)" value="{@coaddress2}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="coaddress3" name="coaddress3" maxlength="100" placeholder="City" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@coaddress3}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="coaddress4" name="coaddress4" maxlength="100" placeholder="Province" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@coaddress4}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="cozipcode" name="cozipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@cozipcode}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="emptenure" class="col-sm-4 control-label"># of years with present employment</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="emptenure" name="emptenure" maxlength="2" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@emptenure}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="emptenuretotal" class="col-sm-4 control-label">Total # of years working</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="emptenuretotal" name="emptenuretotal" maxlength="2" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@emptenuretotal}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="empstatus" class="col-sm-4 control-label">Employment Status</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="empstatus" name="empstatus">
+                  <option value="{@empstatus}">{@empstatus}</option>
+                  <option value="Regular">Regular</option>
+                  <option value="Probationary">Probationary</option>
+                  <option value="Contractual">Contractual</option>
+                  <option value="Freelance">Freelance</option>
+                  <option value="Consultancy">Consultancy</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="annualincome" class="col-sm-4 control-label">Annual income</label>
+              <div class="col-sm-3">
+                <div class="input-group">
+                  <span class="input-group-addon"> Php </span>
+                  <input type="text" class="form-control" id="annualincome" name="annualincome" maxlength="10" min="0.00"
+                  onblur="if (isAmountPositive(this.value)){this.value=formatCurrency(this.value);} else {this.value='0.00';}" 
+                  onkeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                  value="{@annualincome}"
+                  />
+                </div>
+              </div>
+            </div>
+            
+          </section>
+          
+          <section id="ccinfo">
+            <div class="col-sm-12">
+              <hr/>
+              <h4>Credit Card Information</h4>
+              <hr/>
+            </div>
+            <div class="form-group">
+              <label for="cardissuer" class="col-sm-4 control-label">Credit card issuer</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="cardissuer" name="cardissuer" maxlength="50" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@cardissuer}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cardnumber" class="col-sm-4 control-label">Credit card number</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="cardnumber" name="cardnumber" maxlength="16" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@cardnumber}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cardlimit" class="col-sm-4 control-label">Credit card limit</label>
+              <div class="col-sm-3">
+                <div class="input-group">
+                  <span class="input-group-addon"> Php </span>
+                  <input type="text" class="form-control" id="cardlimit" name="cardlimit" maxlength="50"
+                  onblur="if (isAmountPositive(this.value)){this.value=formatCurrency(this.value);} else {this.value='0.00';}" 
+                  onkeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                  value="{@cardlimit}"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="membersince" class="col-sm-4 control-label">Member since</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="membersince" name="membersince" maxlength="50" onkeyup="this.value=ValidCharsAlphaNumeric(this.value)" value="{@membersince}">
+              </div>
+            </div>
+          </section>
+          
+          <section id="spouseinfo">
+            <div class="col-sm-12">
+              <hr/>
+              <h4>Spouse Details</h4>
+              <hr/>
+            </div>
+            <div class="form-group">
+              <label for="spfirstname" class="col-sm-4 control-label">First name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="spfirstname" name="spfirstname" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@spfirstname}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="spmiddlename" class="col-sm-4 control-label">Middle name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="spmiddlename" name="spmiddlename" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@spmiddlename}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="splastname" class="col-sm-4 control-label">Last name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="splastname" name="splastname" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@splastname}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="spdobm" class="col-sm-4 control-label">Date of birth</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="spdobm" name="spdobm">
+                  <option value="{@spdobm}">{@spdobm}</option>
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" id="spdobd" name="spdobd">
+                  <option value="{@spdobd}">{@spdobd}</option>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" id="spdoby" name="spdoby">
+                  <option value="{@spdoby}">{@spdoby}</option>
+                  <option value="1941">1941</option>
+                  <option value="1942">1942</option>
+                  <option value="1943">1943</option>
+                  <option value="1944">1944</option>
+                  <option value="1945">1945</option>
+                  <option value="1946">1946</option>
+                  <option value="1947">1947</option>
+                  <option value="1948">1948</option>
+                  <option value="1949">1949</option>
+                  <option value="1950">1950</option>
+                  <option value="1951">1951</option>
+                  <option value="1952">1952</option>
+                  <option value="1953">1953</option>
+                  <option value="1954">1954</option>
+                  <option value="1955">1955</option>
+                  <option value="1956">1956</option>
+                  <option value="1957">1957</option>
+                  <option value="1958">1958</option>
+                  <option value="1959">1959</option>
+                  <option value="1960">1960</option>
+                  <option value="1961">1961</option>
+                  <option value="1962">1962</option>
+                  <option value="1963">1963</option>
+                  <option value="1964">1964</option>
+                  <option value="1965">1965</option>
+                  <option value="1966">1966</option>
+                  <option value="1967">1967</option>
+                  <option value="1968">1968</option>
+                  <option value="1969">1969</option>
+                  <option value="1970">1970</option>
+                  <option value="1971">1971</option>
+                  <option value="1972">1972</option>
+                  <option value="1973">1973</option>
+                  <option value="1974">1974</option>
+                  <option value="1975">1975</option>
+                  <option value="1976">1976</option>
+                  <option value="1977">1977</option>
+                  <option value="1978">1978</option>
+                  <option value="1979">1979</option>
+                  <option value="1980">1980</option>
+                  <option value="1981">1981</option>
+                  <option value="1982">1982</option>
+                  <option value="1983">1983</option>
+                  <option value="1984">1984</option>
+                  <option value="1985">1985</option>
+                  <option value="1986">1986</option>
+                  <option value="1987">1987</option>
+                  <option value="1988">1988</option>
+                  <option value="1989">1989</option>
+                  <option value="1990">1990</option>
+                  <option value="1991">1991</option>
+                  <option value="1992">1992</option>
+                  <option value="1993">1993</option>
+                  <option value="1994">1994</option>
+                  <option value="1995">1995</option>
+                  <option value="1996">1996</option>
+                  <option value="1997">1997</option>
+                  <option value="1998">1998</option>
+                  <option value="1999">1999</option>
+                  <option value="2000">2000</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="spcompany" class="col-sm-4 control-label">Company name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="spcompany" name="spcompany" maxlength="100" onkeyup="this.value=ValidCharsAlphaNumeric(this.value)" value="{@spcompany}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="spposition" class="col-sm-4 control-label">Position/title</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="spposition" name="spposition" maxlength="100" onkeyup="this.value=ValidCharsAlphaNumeric(this.value)" value="{@spposition}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="spnob" class="col-sm-4 control-label">Industry of employer/business</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="spnob" name="spnob">
+                  <option value="{@spnob}">{@spnob}</option>
+                  <option value="Agriculture">Agriculture</option>
+                  <option value="Banking">Banking</option>
+                  <option value="Brokerage">Brokerage</option>
+                  <option value="Business/Commercial Services">Business/Commercial Services</option>
+                  <option value="Communication">Communication</option>
+                  <option value="Community/Social/Personal">Community/Social/Personal</option>
+                  <option value="Construction">Construction</option>
+                  <option value="Consultancy">Consultancy</option>
+                  <option value="Education">Education</option>
+                  <option value="Electricity">Electricity</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Financial Institution">Financial Institution</option>
+                  <option value="Food Industry">Food Industry</option>
+                  <option value="Government Service">Government Service</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                  <option value="Medical Services">Medical Services</option>
+                  <option value="Mining">Mining</option>
+                  <option value="Professional Practice">Professional Practice</option>
+                  <option value="Real Estate">Real Estate</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Utilities">Utilities</option>
+                  <option value="Wholesale and Retail">Wholesale and Retail</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="spcompanyphone" class="col-sm-4 control-label">Business phone number</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="spcompanyphone" name="spcompanyphone" maxlength="50" onkeyup="this.value=ValidCharsPhone(this.value)" value="{@spcompanyphone}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="spcoaddress1" class="col-sm-4 control-label">Company address</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="spcoaddress1" name="spcoaddress1" maxlength="100" placeholder="Department" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@spcoaddress1}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="spcoaddress2" name="spcoaddress2" maxlength="100" placeholder="Floor, Bldg., No., Street, Subd." onkeyup="this.value=ValidCharsAddress(this.value)" value="{@spcoaddress2}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="spcoaddress3" name="spcoaddress3" maxlength="100" placeholder="City" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@spcoaddress3}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="spcoaddress4" name="spcoaddress4" maxlength="100" placeholder="Province" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@spcoaddress4}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="spcozipcode" name="spcozipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@spcozipcode}">
+              </div>
+            </div>
+          </section>
+          
+          <section id="suppinfo">
+            <div class="col-sm-12">
+              <hr/>
+              <h4>Supplementary Card</h4>
+              <hr/>
+            </div>
+            <div class="form-group">
+              <label for="supfirstname" class="col-sm-4 control-label">First name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="supfirstname" name="supfirstname" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@supfirstname}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supmiddlename" class="col-sm-4 control-label">Middle name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="supmiddlename" name="supmiddlename" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@supmiddlename}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="suplastname" class="col-sm-4 control-label">Last name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="suplastname" name="suplastname" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@suplastname}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supaddress1" class="col-sm-4 control-label">Address</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="supaddress1" name="supaddress1" maxlength="100" placeholder="No. / Street" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@supaddress1}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="supaddress2" name="supaddress2" maxlength="100" placeholder="Brgy. / Village" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@supaddress2}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="supaddress3" name="supaddress3" maxlength="100" placeholder="City" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@supaddress3}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="supaddress4" name="supaddress4" maxlength="100" placeholder="Province" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@supaddress4}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="supzipcode" name="supzipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@supzipcode}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supembossname" class="col-sm-4 control-label">Name to appear on card</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="supembossname" name="supembossname" maxlength="19" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@supembossname}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supcontact" class="col-sm-4 control-label">Contact number</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="supcontact" name="supcontact" maxlength="50" onkeyup="this.value=ValidCharsPhone(this.value)" value="{@supcontact}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supsourceoffunds" class="col-sm-4 control-label">Source of funds</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="supsourceoffunds" name="supsourceoffunds">
+                  <option value="{@supsourceoffunds}">{@supsourceoffunds}</option>
+                  <option value="Employment (Private)">Employment (Private)</option>
+                  <option value="Employment (Gov't)">Employment (Gov't)</option>
+                  <option value="Self-employment/Business">Self-employment/Business</option>
+                  <option value="Investments">Investments</option>
+                  <option value="Retired (Pension, etc)">Retired (Pension, etc)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supnob" class="col-sm-4 control-label">Major Industry of Business</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="supnob" name="supnob">
+                  <option value="{@supnob}">{@supnob}</option>
+                  <option value="Agriculture">Agriculture</option>
+                  <option value="Banking">Banking</option>
+                  <option value="Brokerage">Brokerage</option>
+                  <option value="Business/Commercial Services">Business/Commercial Services</option>
+                  <option value="Communication">Communication</option>
+                  <option value="Community/Social/Personal">Community/Social/Personal</option>
+                  <option value="Construction">Construction</option>
+                  <option value="Consultancy">Consultancy</option>
+                  <option value="Education">Education</option>
+                  <option value="Electricity">Electricity</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Financial Institution">Financial Institution</option>
+                  <option value="Food Industry">Food Industry</option>
+                  <option value="Government Service">Government Service</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                  <option value="Medical Services">Medical Services</option>
+                  <option value="Mining">Mining</option>
+                  <option value="Professional Practice">Professional Practice</option>
+                  <option value="Real Estate">Real Estate</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Utilities">Utilities</option>
+                  <option value="Wholesale and Retail">Wholesale and Retail</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supcompany" class="col-sm-4 control-label">Company Name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="supcompany" name="supcompany" maxlength="100" onkeyup="this.value=ValidCharsAlphaNumeric(this.value)" value="{@supcompany}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="suprelation" class="col-sm-4 control-label">Relation</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="suprelation" name="suprelation" maxlength="50" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@suprelation}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supcitizenship" class="col-sm-4 control-label">Nationality/Citizenship</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="supcitizenship" name="supcitizenship">
+                  <option value="{@supcitizenship}">{@supcitizenship}</option>
+                  <option value="Filipino">Filipino</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supdobm" class="col-sm-4 control-label">Date of birth</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="supdobm" name="supdobm">
+                  <option value="{@supdobm}">{@supdobm}</option>
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" id="supdobd" name="supdobd">
+                  <option value="{@supdobd}">{@supdobd}</option>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" id="supdoby" name="supdoby">
+                  <option value="{@supdoby}">{@supdoby}</option>
+                  <option value="1941">1941</option>
+                  <option value="1942">1942</option>
+                  <option value="1943">1943</option>
+                  <option value="1944">1944</option>
+                  <option value="1945">1945</option>
+                  <option value="1946">1946</option>
+                  <option value="1947">1947</option>
+                  <option value="1948">1948</option>
+                  <option value="1949">1949</option>
+                  <option value="1950">1950</option>
+                  <option value="1951">1951</option>
+                  <option value="1952">1952</option>
+                  <option value="1953">1953</option>
+                  <option value="1954">1954</option>
+                  <option value="1955">1955</option>
+                  <option value="1956">1956</option>
+                  <option value="1957">1957</option>
+                  <option value="1958">1958</option>
+                  <option value="1959">1959</option>
+                  <option value="1960">1960</option>
+                  <option value="1961">1961</option>
+                  <option value="1962">1962</option>
+                  <option value="1963">1963</option>
+                  <option value="1964">1964</option>
+                  <option value="1965">1965</option>
+                  <option value="1966">1966</option>
+                  <option value="1967">1967</option>
+                  <option value="1968">1968</option>
+                  <option value="1969">1969</option>
+                  <option value="1970">1970</option>
+                  <option value="1971">1971</option>
+                  <option value="1972">1972</option>
+                  <option value="1973">1973</option>
+                  <option value="1974">1974</option>
+                  <option value="1975">1975</option>
+                  <option value="1976">1976</option>
+                  <option value="1977">1977</option>
+                  <option value="1978">1978</option>
+                  <option value="1979">1979</option>
+                  <option value="1980">1980</option>
+                  <option value="1981">1981</option>
+                  <option value="1982">1982</option>
+                  <option value="1983">1983</option>
+                  <option value="1984">1984</option>
+                  <option value="1985">1985</option>
+                  <option value="1986">1986</option>
+                  <option value="1987">1987</option>
+                  <option value="1988">1988</option>
+                  <option value="1989">1989</option>
+                  <option value="1990">1990</option>
+                  <option value="1991">1991</option>
+                  <option value="1992">1992</option>
+                  <option value="1993">1993</option>
+                  <option value="1994">1994</option>
+                  <option value="1995">1995</option>
+                  <option value="1996">1996</option>
+                  <option value="1997">1997</option>
+                  <option value="1998">1998</option>
+                  <option value="1999">1999</option>
+                  <option value="2000">2000</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="suppob" class="col-sm-4 control-label">Place of birth</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="suppob" name="suppob" maxlength="50" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@suppob}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="suptin" class="col-sm-4 control-label"><font color="red" size="+1">*</font> Tax Identification Number</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="suptin" name="suptin" maxlength="9" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@suptin}" required placeholder="(9 digits)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="supsss" class="col-sm-4 control-label">SSS/GSIS number</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="supsss" name="supsss" maxlength="20" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@supsss}">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="supspendlimit" class="col-sm-4 control-label">Assigned spend limit</label>
+              <div class="col-sm-3">
+                <div class="input-group">
+                  <span class="input-group-addon"> Php </span>
+                  <input type="text" class="form-control" id="supspendlimit" name="supspendlimit" maxlength="10" min="0.00"
+                  onblur="if (isAmountPositive(this.value)){this.value=formatCurrency(this.value);} else {this.value='0.00';}" 
+                  onkeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                  value="{@supspendlimit}"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <section id="personalref">
+            <div class="col-sm-12">
+              <hr/>
+              <h4>Personal Reference</h4>
+              <hr/>
+            </div>
+            <div class="form-group">
+              <label for="reffirstname" class="col-sm-4 control-label">First name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="reffirstname" name="reffirstname" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@reffirstname}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="refmiddlename" class="col-sm-4 control-label">Middle name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="refmiddlename" name="refmiddlename" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@refmiddlename}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reflastname" class="col-sm-4 control-label">Last name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="reflastname" name="reflastname" maxlength="100" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@reflastname}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="refrelation" class="col-sm-4 control-label">Relation</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="refrelation" name="refrelation" maxlength="50" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@refrelation}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="refaddress1" class="col-sm-4 control-label">Referal Address</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="refaddress1" name="refaddress1" maxlength="100" placeholder="No. / Street" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@refaddress1}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="refaddress2" name="refaddress2" maxlength="100" placeholder="Brgy. / Village" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@refaddress2}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="refaddress3" name="refaddress3" maxlength="100" placeholder="City" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@refaddress3}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="refaddress4" name="refaddress4" maxlength="100" placeholder="Province" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@refaddress4}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="refzipcode" name="refzipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@refzipcode}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="refcontact" class="col-sm-4 control-label">Contact number</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="refcontact" name="refcontact" maxlength="50" onkeyup="this.value=ValidCharsPhone(this.value)" value="{@refcontact}">
+              </div>
+            </div>
+          </section>
+          
+          <section id="cardchoices">
+            <div class="col-sm-12">
+              <hr/>
+              <h4>Credit Card Choices</h4>
+              <hr/>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" id="chinabank" name="chinabank" class="col-sm-1 cardchoice" value="checked" {@chinabank}>
+              <label for="chinabank" class="col-sm-2 control-label underlined">China Bank</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="cbccardtype" name="cbccardtype">
+                  <option value="{@cbccardtype}">{@cbccardtype}
+                  <option value="Prime">Prime</option>
+                  <option value="Platinum">Platinum</option>
+                  <option value="World">World</option>
+                </select>
+              </div>
+            </div>
+            <hr class="cardsep"/>
+            <div class="form-group">
+              <input type="checkbox" id="eastwestbank" name="eastwestbank" class="col-sm-2 cardchoice" value="checked" {@eastwestbank}>
+              <label for="eastwestbank" class="col-sm-2 control-label">Eastwest Bank</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="ewbcardtype" name="ewbcardtype">
+                  <option value="{@ewbcardtype}">{@ewbcardtype}</option>
+                  <option value="Eastwest Practical Mastercard">Eastwest Practical Mastercard</option>
+                  <option value="Eastwest Classic Mastercard">Eastwest Classic Mastercard</option>
+                  <option value="Eastwest Classic Visa">Eastwest Classic Visa</option>
+                  <option value="Eastwest Gold Mastercard">Eastwest Gold Mastercard</option>
+                  <option value="Eastwest Gold Visa">Eastwest Gold Visa</option>
+                  <option value="Eastwest Dolce Vita Mastercard">Eastwest Dolce Vita Mastercard</option>
+                  <option value="Eastwest Everyday Mastercard">Eastwest Everyday Mastercard</option>
+                  <option value="Eastwest Platinum Mastercard">Eastwest Platinum Mastercard</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="ewbexisting" class="col-sm-4 control-label">Existing Eastwest Bank client?</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="ewbexisting" name="ewbexisting">
+                  <option value="{@ewbexisting}">{@ewbexisting}</option>
+                  <option value="Yes - Depositor">Yes - Depositor</option>
+                  <option value="Yes - Borrower">Yes - Borrower</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="ewbclient" class="col-sm-4 control-label">Existing principal Eastwest Credit Cardholder?</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="ewbclient" name="ewbclient">
+                  <option value="{@ewbclient}">{@ewbclient}</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+            <hr class="cardsep"/>
+            <div class="form-group">
+              <input type="checkbox" id="metrobank" name="metrobank" class="col-sm-2 cardchoice" value="checked" {@metrobank}>
+              <label for="metrobank" class="col-sm-2 control-label">Metrobank</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="mcccardtype" name="mcccardtype">
+                  <option value="{@mcccardtype}">{@mcccardtype}</option>
+                  <option value="Classic Visa/MasterCard">Classic Visa/MasterCard</option>
+                  <option value="Gold Visa/MasterCard">Gold Visa/MasterCard</option>
+                  <option value="Gold Dollar MasterCard">Gold Dollar MasterCard</option>
+                  <option value="Femme Visa">Femme Visa</option>
+                  <option value="Platinum Peso MasterCard">Platinum Peso MasterCard</option>
+                  <option value="Platinum Dollar MasterCard">Platinum Dollar MasterCard</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mccothercard" class="col-sm-4 control-label">Accept other card choice?</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="mccothercard" name="mccothercard">
+                  <option value="{@mccothercard}">{@mccothercard}</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mccsaveswap" class="col-sm-4 control-label">Save&Swipe app?</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="mccsaveswap" name="mccsaveswap">
+                  <option value="{@mccsaveswap}">{@mccsaveswap}</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mccother" class="col-sm-4 control-label">Other MCC Cards, if any</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="mccother" name="mccother" maxlength="50" onkeyup="this.value=ValidCharsAlpha(this.value)" value="{@mccother}">
+              </div>
+            </div>
+            <hr class="cardsep"/>
+            <div class="form-group">
+              <input type="checkbox" id="rcbc" name="rcbc" class="col-sm-2 cardchoice" value="checked" {@rcbc}>
+              <label for="rcbc" class="col-sm-2 control-label">RCBC</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="rcbccardtype" name="rcbccardtype">
+                  <option value="{@rcbccardtype}">{@rcbccardtype}</option>
+                  <option value="Visa Classic">Visa Classic</option>
+                  <option value="Visa Gold">Visa Gold</option>
+                  <option value="Visa Infinite">Visa Infinite</option>
+                  <option value="Mastercard Classic">Mastercard Classic</option>
+                  <option value="Mastercard Gold">Mastercard Gold</option>
+                  <option value="Mastercard Diamond">Mastercard Diamond</option>
+                  <option value="JCB Classic">JCB Classic</option>
+                  <option value="JCB Gold">JCB Gold</option>
+                  <option value="JCB myDream">JCB myDream</option>
+                  <option value="Union Pay Classic">Union Pay Classic</option>
+                  <option value="Union Pay Diamond">Union Pay Diamond</option>
+                </select>
+              </div>
+            </div>
+            <hr class="cardsep"/>
+            <div class="form-group">
+              <input type="checkbox" id="maybank" name="maybank" class="col-sm-2 cardchoice" value="checked" {@maybank}>
+              <label for="maybank" class="col-sm-2 control-label">Maybank</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="mpicardtype" name="mpicardtype">
+                  <option value="{@mpicardtype}">{@mpicardtype}</option>
+                  <option value="Visa Classic">Visa Classic</option>
+                  <option value="Visa Gold">Visa Gold</option>
+                  <option value="Visa Infinite">Visa Infinite</option>
+                  <option value="Mastercard Classic">Mastercard Classic</option>
+                  <option value="Mastercard Gold">Mastercard Gold</option>
+                  <option value="Mastercard Diamond">Mastercard Diamond</option>
+                  <option value="JCB Classic">JCB Classic</option>
+                  <option value="JCB Gold">JCB Gold</option>
+                  <option value="JCB myDream">JCB myDream</option>
+                  <option value="Union Pay Classic">Union Pay Classic</option>
+                  <option value="Union Pay Diamond">Union Pay Diamond</option>
+                </select>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <hr class="spacer"/>
+    <div class="row">
+      <div class="col-xs-4 col-md-3">
+        <p>Lead Information:</p>
+        <ul class="nav nav-pills nav-stacked">
+          <li class="active"><a href="#" onclick="showcallhistory({@leadid},'{@completename}')">Call History</a></li>
+          <li class="active"><a href="#" onclick="showreferals({@leadid},'{@completename}',{@userid})">Referals</a></li>
+        </ul>
+      </div>
+      <div class="col-xs-5 col-md-6">
+        <p>Remarks:</p>
+        <textarea rows="5" style="width: 100%; resize: none;" class="form-control" id="remarks" name="remarks">{@remarks}</textarea>
+      </div>
+      <div class="col-xs-3 col-md-3">
+        <p align="right">Disposition:</p>
+        <p align="right">
+          <select class="form-control" id="disposition" name="disposition" required>
+            <option value="">
+            <loop dispositions>
+              <option value="{@disposition}">{@disposition}
+            </loop dispositions>
+          </select>
+        </p>
+        <p align="right"><input type="submit" class="btn btn-success" value="Save" formnovalidate></p>
+      </div>
+    </div>
+    <hr class="spacer"/>
+  </form>
+</div>

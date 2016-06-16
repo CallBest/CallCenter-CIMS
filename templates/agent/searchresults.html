@@ -1,0 +1,92 @@
+<script>
+  function showlead(leadid) {
+    var nextlink = 'agent.php?show={@workingfolder}&leadid=' + leadid;
+    window.location = nextlink;
+  }
+</script>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-10 cols-xs-offset-1 col-md-10 col-md-offset-1">
+      <div class="panel panel-primary">
+        <div class="panel-heading"><span class="glyphicon glyphicon-search"></span> Search Lead</div>
+        <div class="panel-body">
+          <form class="form-horizontal" method="GET" action="{@mainpage}" onsubmit="return checkSearch();">
+            <div class="form-group">
+              <label for="searchname" class="col-sm-4 control-label">Client name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="searchname" name="searchname" maxlength="150" onkeyup="this.value=ValidCharsAlpha(this.value)"><br>
+              </div>
+            </div>
+            <div>
+              <input type="text" class="col-sm-10 col-sm-offset-1 statusbox" id="status" readonly/>
+            </div>
+            <div class="col-sm-10 col-sm-offset-1">
+              <hr/>
+              <div class="col-sm-6">
+                <p align="left">
+                  <input type="button" class="btn btn-danger" value="Cancel" onclick="javascript:window.location='{@mainpage}';">
+                </p>
+              </div>
+              <div class="col-sm-6">
+                <p align="right">
+                  <input type="hidden" id="userid" name="userid" value="{@userid}">
+                  <input type="hidden" id="show" name="show" value="{@workingfolder}">
+                  <input type="submit" class="btn btn-success" value="Search">
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div>
+    <nav align="right">
+      <ul class="pagination pagination-sm">
+        <li><a href="?show={@workingfolder}&searchname={@searchname}&start={@prev}"><span class="glyphicon glyphicon-backward"></span> Previous</a></li>
+        <li><a href="?show={@workingfolder}&searchname={@searchname}&start={@next}">Next <span class="glyphicon glyphicon-forward"></span></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="panel panel-primary">
+    <table class="table table-condensed">
+      <thead>
+        <tr style="background-color: black; color: white;">
+          <th width="8%">Lead ID</th>
+          <th width="22%">Database Name</th>
+          <th width="30%">Remarks</th>
+          <th width="15%">Tag Date</th>
+          <th width="10%">Disposition</th>
+          <th width="15">List Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <loop gridvalues>
+          <tr onclick="showlead({@leadid})">
+            <td>{@leadid}</td>
+            <td>{@completename} <br/> {@concatname}</td>
+            <td>{@remarks}</td>
+            <td>{@tagdate}</td>
+            <td>{@disposition}</td>
+            <td>{@listname}</td>
+          </tr>
+        </loop gridvalues>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <nav align="right">
+      <ul class="pagination pagination-sm">
+        <li><a href="?show={@workingfolder}&searchname={@searchname}&start={@prev}"><span class="glyphicon glyphicon-backward"></span> Previous</a></li>
+        <li><a href="?show={@workingfolder}&searchname={@searchname}&start={@next}">Next <span class="glyphicon glyphicon-forward"></span></a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<br><br>

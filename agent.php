@@ -1,28 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Agent</title>
+<?php
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+require_once("includes/cookie.php");
+require_once("includes/template.php");
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
+$body = new Template();
+$cookie = new CookieInfo("CMS1");
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-  </body>
-</html>
+// check existing credentials before proceeding with tha application
+// redirect to login if no valid credentials found 
+if ($cookie->check()) {
+	$cookie->getcookies();
+  $userid = $cookie->array['userid'];
+  $teamid = $cookie->array['teamid'];
+  $extension = $cookie->array['extension'];
+  $hostaddress = $cookie->array['hostaddress'];
+  $body->add_key('userid',$userid);
+	$body->add_key('firstname',$cookie->array['firstname']);
+	$body->add_key('lastname',$cookie->array['lastname']);
+  $body->add_key('extension',$extension);
+  $body->add_key('hostaddress',$hostaddress);
+  $body->add_key('teamid',$teamid);
+} else {
+  header('Location: index.php');
+}
+
+// set the header menu
+$body->set_template("templates/agent/header.html");
+echo $body->create();
+
+//set the main content
+$page = isset($_REQUEST['show']) ? strtolower(str_replace("'","",$_REQUEST['show'])) : 'dashboard';
+$body->add_key('mainpage',$_SERVER['SCRIPT_NAME']);
+$body->add_key('workingfolder',$page);
+switch($page){
+  case 'dashboard':
+    $body->set_template("templates/agent/dashboard.html");
+    include('scripts/agent/dashboard.php');
+    break;
+  case 'search':
+    if (isset($_REQUEST['searchname'])) {
+      $body->set_template("templates/agent/searchresults.html");
+      include('scripts/agent/search.php');
+      $body->add_key('searchname',$_REQUEST['searchname']);
+      break;
+    } else if (isset($_REQUEST['leadid'])) {
+      $body->set_template("templates/agent/clientform.html");
+      include('scripts/agent/clientinfo.php');
+      break;
+    } else {
+      $body->set_template("templates/agent/search.html");
+      break;
+    }
+  case 'settings':
+    $body->set_template("templates/agent/usersettings.html");
+    if (isset($_REQUEST['msg'])){
+      $body->add_key('msg',$_REQUEST['msg']);
+    } else {
+      $body->add_key('msg','');
+    }
+    break;
+  case 'fl':
+    $body->set_template("templates/agent/clientform.html");
+    include('scripts/agent/fl.php');
+    break;
+  case 'clientinfo':
+    $body->set_template("templates/agent/clientform.html");
+    include('scripts/agent/clientinfo.php');
+    break;
+  default:
+    if (isset($_REQUEST['leadid'])) {
+      $body->set_template("templates/agent/clientform.html");
+      include('scripts/agent/clientinfo.php');
+    } else {
+      $dispo = str_replace('_',' ',$page);
+      $body->set_template("templates/agent/gridview.html");
+      include('scripts/agent/gridview.php');
+    }
+}
+echo $body->create();
+
+// set the footer, if any.
+$body->set_template("templates/agent/footer.html");
+echo $body->create();
+
+?>

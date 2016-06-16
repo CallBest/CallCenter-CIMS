@@ -1,12 +1,14 @@
 <?php
 
+require_once('settings.php');
+
 class dbconnection {
 	var $connection;
 	var $query;
 	var $result;
 	var $row;
 
-	function dbconnect($host='localhost',$user='cmsonline',$pass='cmsonlineadmin!',$schema='CMSv2') {
+	function dbconnect($host=DBSERV,$user=DBUSER,$pass=DBPASS,$schema=DBNAME) {
 		if ($this->connection = @mysql_connect($host, $user, $pass)) {
 			@mysql_select_db($schema, $this->connection) or $this->errorout();
 		}
