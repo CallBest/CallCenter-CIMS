@@ -1,5 +1,7 @@
 <?php
   $searchname = str_replace(' ','%',$_REQUEST['searchname']);
+  $searchtin = str_replace(' ','%',$_REQUEST['searchtin']);
+  $searchemail = str_replace(' ','%',$_REQUEST['searchemail']);
   
   require_once('includes/dbase.php');
   require_once('includes/settings.php');
@@ -28,9 +30,12 @@
   }
 //actual query
   $db->query = "
-    select * from " . TABLE_CLIENTS . " a 
-    inner join " . TABLE_LISTS . " b on (a.listid=b.listid)
-    where ((completename like '%$searchname%') or (concatname like '%$searchname%'))
+    select * from " . TABLE_SEARCH . " a 
+    inner join " . TABLE_CLIENTS . " b on (a.leadid=b.leadid)
+    inner join " . TABLE_LISTS . " c on (b.listid=c.listid)
+    inner join " . TABLE_DISPO . " d on (b.disposition=d.disposition)
+    where ((a.concatname like '%$searchname%') OR (b.completename like '%$searchname%')) and a.email like '%$searchemail%' and a.tin like '%$searchtin%'
+    and d.campaignid>1 and b.disposition<>'Call Back'
     order by $sort limit $start, $end";
   $db->execute();
   $gridvalues = array();

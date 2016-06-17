@@ -30,6 +30,7 @@ $datafields = array (
   ,'pob'
   ,'civilstatus'
   ,'gender'
+  ,'dependents'
   ,'citizenship'
   ,'mobilephone'
   ,'homephone'
@@ -169,6 +170,8 @@ if (strtoupper($disposition)=='VERIFIED') {
   $db->execute();
 }
 
+
+
 //phonenumbers
 $db->query = "select leadid,phonenumber from ". TABLE_PHONES ." where leadid=$leadid";
 $db->execute();
@@ -183,6 +186,8 @@ for ($x=0; $x < $rowcount; $x++) {
 //cardchoice
 $datafields = array (
   'prefdelivery'
+  ,'prefdeliveryday'
+  ,'prefdeliverytime'
   ,'chinabank'
   ,'eastwestbank'
   ,'metrobank'
@@ -197,6 +202,8 @@ $datafields = array (
   ,'mccsaveswap'
   ,'mccother'
   ,'rcbccardtype'
+  ,'rcbcvisitday'
+  ,'rcbcvisittime'
   ,'mpicardtype'
 );
 

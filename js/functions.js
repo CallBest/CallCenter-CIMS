@@ -191,6 +191,18 @@ function checkSearch() {
   }
 }
 
+function checkSearchTL() {
+  if ((document.getElementById('searchname').value=='') && (document.getElementById('searchtin').value=='') && (document.getElementById('searchemail').value=='')){
+    document.getElementById('status').value='Please specify a search value.';
+    return false;
+  } else if ((document.getElementById('searchname').value.length<5) && (document.getElementById('searchtin').value.length<9) && (document.getElementById('searchemail').value.length<6)) {
+    document.getElementById('status').value='Minimum characters for search field is not met.';
+    return false;
+  } else {
+    document.getElementById('status').value='';
+  }
+}
+
 function checkReferal() {
   if (document.getElementById('referalname').value=='') {
     document.getElementById('status').value='Missing required field.';

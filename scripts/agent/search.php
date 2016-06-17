@@ -30,6 +30,8 @@
   $db->query = "
     select * from " . TABLE_CLIENTS . " a 
     inner join " . TABLE_LISTS . " b on (a.listid=b.listid)
+    inner join " . TABLE_DISPO . " c on (a.disposition=c.disposition)
+    and c.campaignid=1
     where agent=$userid and ((completename like '%$searchname%') or (concatname like '%$searchname%'))
     order by $sort limit $start, $end";
   $db->execute();

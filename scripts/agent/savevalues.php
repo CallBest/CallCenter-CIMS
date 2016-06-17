@@ -31,6 +31,7 @@ $datafields = array (
   ,'pob'
   ,'civilstatus'
   ,'gender'
+  ,'dependents'
   ,'citizenship'
   ,'mobilephone'
   ,'homephone'
@@ -183,6 +184,15 @@ if (strtoupper($disposition)=='VERIFIED') {
       ";
     $db->execute();
   }
+  $db->query = "
+  insert into ". TABLE_FILES . "
+    (leadid,filename,doctype,dateuploaded,agent)
+    values
+    ($leadid,'','','0000-00-00',0)
+    on duplicate key update
+    leadid=$leadid 
+  ";
+  $db->execute();
 }
 
 //phonenumbers
@@ -199,6 +209,8 @@ for ($x=0; $x < $rowcount; $x++) {
 //cardchoice
 $datafields = array (
   'prefdelivery'
+  ,'prefdeliveryday'
+  ,'prefdeliverytime'
   ,'chinabank'
   ,'eastwestbank'
   ,'metrobank'
@@ -213,6 +225,8 @@ $datafields = array (
   ,'mccsaveswap'
   ,'mccother'
   ,'rcbccardtype'
+  ,'rcbcvisitday'
+  ,'rcbcvisittime'
   ,'mpicardtype'
 );
 

@@ -14,12 +14,12 @@ if ($cookie->check()) {
   $teamid = $cookie->array['teamid'];
   $extension = $cookie->array['extension'];
   $hostaddress = $cookie->array['hostaddress'];
-  $body->add_key('userid',$userid);
-	$body->add_key('firstname',$cookie->array['firstname']);
-	$body->add_key('lastname',$cookie->array['lastname']);
-  $body->add_key('extension',$extension);
-  $body->add_key('hostaddress',$hostaddress);
-  $body->add_key('teamid',$teamid);
+  $body->add_key('loggeduserid',$userid);
+	$body->add_key('loggedfirstname',$cookie->array['firstname']);
+	$body->add_key('loggedlastname',$cookie->array['lastname']);
+  $body->add_key('loggedextension',$extension);
+  $body->add_key('loggedhostaddress',$hostaddress);
+  $body->add_key('loggedteamid',$teamid);
 } else {
   header('Location: index.php');
 }
@@ -59,22 +59,29 @@ switch($page){
       $body->add_key('msg','');
     }
     break;
-  case 'fl':
-    $body->set_template("templates/tl/clientform.html");
-    include('scripts/tl/fl.php');
-    break;
   case 'clientinfo':
     $body->set_template("templates/tl/clientform.html");
     include('scripts/tl/clientinfo.php');
     break;
   default:
-    if (isset($_REQUEST['leadid'])) {
-      $body->set_template("templates/tl/clientform.html");
-      include('scripts/tl/clientinfo.php');
+    if (isset($_REQUEST['mode'])) { //show Docs page/grid
+      if (isset($_REQUEST['leadid'])) {
+        $body->set_template("templates/tl/documents.html");
+        include('scripts/tl/clientinfo.php');
+      } else {
+        $dispo = str_replace('_',' ',$page);
+        $body->set_template("templates/tl/gridview-docs.html");
+        include('scripts/tl/gridview.php');
+      }
     } else {
-      $dispo = str_replace('_',' ',$page);
-      $body->set_template("templates/tl/gridview.html");
-      include('scripts/tl/gridview.php');
+      if (isset($_REQUEST['leadid'])) {
+        $body->set_template("templates/tl/clientform.html");
+        include('scripts/tl/clientinfo.php');
+      } else {
+        $dispo = str_replace('_',' ',$page);
+        $body->set_template("templates/tl/gridview.html");
+        include('scripts/tl/gridview.php');
+      }
     }
 }
 echo $body->create();

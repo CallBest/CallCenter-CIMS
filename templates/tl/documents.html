@@ -1,0 +1,241 @@
+<style>
+  .tab-panel {
+    display: block;
+    height:60vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width:100%;
+    border: 1px solid #22c;
+    border-radius: 3px;
+  }
+  #clientsummary{
+	  background-color: steelblue;
+  }
+  #documents{
+    background-color: darkseagreen;
+  }
+  #cardchoice{
+    background-color: lightgoldenrodyellow;
+  }
+  section {
+    padding: 20px 0 20px 0;
+  }
+</style>
+<script>
+  $(document).ready(function(){
+    $('.tab-panel').scrollspy({ target: '#sidenav' });
+    $(".nav-info a").on("click", function(){
+      $(".nav-info").find(".active").removeClass("active");
+      $(this).parent().addClass("active");
+    });
+
+    $('#uploadfiles').on("click", function(){
+      var formData = new FormData($("#form-upload")[0]);
+      //loop for add $_FILES["upload"+i] to formData
+      for (var i = 0, len = document.getElementById('upload').files.length; i < len; i++) {
+          formData.append("upload"+(i+1), document.getElementById('upload').files[i]);
+      }
+
+      //send formData to server-side
+      $.ajax({
+        url : "scripts/tl/upload.php",
+        type : 'post',
+        data : formData,
+        dataType : 'html',
+        async : true,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,   // tell jQuery not to set contentType
+        error : function(request){
+          //$('#uploadstatus').append(request.responseText);
+        },
+        success : function(data){
+          $('#uploadstatus').append(data);
+        }
+      });
+    });
+  });
+</script>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6">
+      <h3><strong>{@completename}</strong></h3>
+    </div>
+    <div class="col-xs-6 margintop">
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-primary">Print</button>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#"><img src="images/cbc-logo.png"/> Chinabank Application Form</a></li>
+          <li><a href="#"><img src="images/ewb-logo.png"/> Eastwest Bank Application Form</a></li>
+          <li><a href="#"><img src="images/mcc-logo.png"/> Metrobank Application Form</a></li>
+          <li><a href="#"><img src="images/rcbc-logo.png"/> RCBC Application Form</a></li>
+          <li><a href="#"><img src="images/mpi-logo.png"/> Maybank Application Form</a></li>
+          <li role="separator" class="divider"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="spacer"/>
+
+  <form id="form-upload" class="form-horizontal" enctype="multipart/form-data" action="scripts/tl/savevalues-docs.php" method="POST">  
+  <div class="row">
+    <div id="sidenav" class="col-xs-4 col-md-3">
+      <h5><strong>{@completename}</strong></h5>
+      <hr class="spacer"/>
+      <ul class="nav nav-pills nav-stacked nav-info">
+        <li class="active"><a href="#documents">Documents Submitted</a></li>
+        <li><a href="#cardchoice">Card Choices</a></li>
+        <li><a href="#clientsummary">Client Summary</a></li>
+      </ul>
+    </div>
+
+    <div class="col-xs-8 col-md-9">
+      <div class="tab-panel" data-offset='120' data-spy="scroll" data-target="#sidenav">
+        <section id="documents">
+          <div class="col-sm-12">
+            <hr/>
+            <h4>Documents Submitted</h4>
+            <hr/>
+          </div>
+          <div class="row">
+            <label class="col-sm-4 control-label">Files uploaded for this lead</label>  
+            <div class="col-sm-6">
+              <loop files>
+                <ul>
+                  <li><a href="uploads/{@filename}" target="_blank">{@filename}</a></li>
+                </ul>
+              </loop files>
+            </div>
+            <hr class="cardsep">
+          </div>
+          <div class="row">
+            <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
+            <label class="col-sm-4 control-label">Choose a files to upload:<br/>(Multiple files allowed)</label>
+            <div class="col-sm-6">
+              <input type="file" id="upload" name="upload[]" class="form-control" multiple/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-sm-offset-5">
+              <button type="button" id="uploadfiles" class="btn btn-warning">Upload Files</button>
+            </div>
+          </div>
+          <hr class="cardsep">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-4" id="uploadstatus">
+            </div>
+          </div>
+        </section>
+
+        <section id="cardchoice">
+          <div class="col-sm-12">
+            <hr/>
+            <h4>Card Choices</h4>
+            <hr/>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <input type="checkbox" id="chinabank" name="chinabank" class="col-sm-1 cardchoice" value="checked" {@chinabank} disabled>
+              <label for="chinabank" class="col-sm-2 control-label underlined">China Bank</label>
+              <input type="checkbox" id="eastwestbank" name="eastwestbank" class="col-sm-1 cardchoice" value="checked" {@eastwestbank} disabled>
+              <label for="eastwestbank" class="col-sm-2 control-label underlined">Eastwest Bank</label>
+              <input type="checkbox" id="metrobank" name="metrobank" class="col-sm-1 cardchoice" value="checked" {@metrobank} disabled>
+              <label for="metrobank" class="col-sm-2 control-label underlined">Metrobank</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <input type="checkbox" id="rcbc" name="rcbc" class="col-sm-1 cardchoice" value="checked" {@rcbc} disabled>
+              <label for="rcbc" class="col-sm-2 control-label underlined">RCBC</label>
+              <input type="checkbox" id="maybank" name="maybank" class="col-sm-1 cardchoice" value="checked" {@maybank} disabled>
+              <label for="maybank" class="col-sm-2 control-label underlined">Maybank</label>
+            </div>
+          </div>
+        </section>
+
+        <section id="clientsummary">
+          <div class="col-sm-12">
+            <hr/>
+            <h4>Client Summary</h4>
+            <hr/>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-sm-offset-2">Client Name on Database:</label>
+            <div class="col-sm-6 control-label">
+              {@completename}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-sm-offset-2 control-label">Edited Name:</label>
+            <div class="col-sm-6">
+              {@clfirstname} {@clmiddlename} {@cllastname}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-sm-offset-2 control-label">Agent Name:</label>
+            <div class="col-sm-6">
+              {@lastname}, {@firstname}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-sm-offset-2 control-label">List Name:</label>
+            <div class="col-sm-6">
+              {@listname}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-sm-offset-2 control-label">Company:</label>
+            <div class="col-sm-6">
+              {@company}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-sm-offset-2 control-label">Employee Position:</label>
+            <div class="col-sm-6">
+              {@empposition}
+            </div>
+          </div>
+        </section>
+      </div>  
+    </div>
+  </div>
+  
+  <hr class="spacer"/>
+
+  <div class="row">
+    <div class="col-xs-4 col-md-3">
+      <p>Lead Information:</p>
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="#" onclick="showcallhistory({@leadid},'{@completename}')">Call History</a></li>
+      </ul>
+    </div>
+    <div class="col-xs-5 col-md-6">
+      <p>Remarks:</p>
+      <textarea rows="5" style="width: 100%; resize: none;" class="form-control" id="remarks" name="remarks">{@remarks}</textarea>
+    </div>
+    <div class="col-xs-3 col-md-3">
+      <p align="right">Disposition:</p>
+      <p align="right">
+        <select class="form-control" id="disposition" name="disposition" required>
+          <option value="">
+          <loop dispositions>
+            <option value="{@disposition}">{@disposition}
+          </loop dispositions>
+        </select>
+      </p>
+      <p align="right">
+        <input type="hidden" id="agent" name="agent" value="{@loggeduserid}">
+        <input type="hidden" id="leadid" name="leadid" value="{@leadid}">
+        <input type="hidden" id="workingfolder" name="workingfolder" value="{@workingfolder}">
+        <input type="submit" class="btn btn-success" value="Save" formnovalidate>
+      </p>
+    </div>
+  </div>
+  
+  <hr class="spacer"/>
+  </form>

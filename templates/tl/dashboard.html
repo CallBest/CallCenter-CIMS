@@ -13,34 +13,34 @@
         <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span> Today's Production ({@currentdate})</div>
         <div class="panel-body form-horizontal">
           <div class="col-xs-6">
-            <label class="control-label">Leads disposed: {@todaydisposed}</label>
+            <label class="control-label">Verifications for checking: {@todaydisposed}</label>
             <div class="progress">
               <div class="progress-bar" role="progressbar" aria-valuenow="{@todaydisposed}" aria-valuemin="0" aria-valuemax="250" style="width:{@todaydisposedwidth}%">
-                <span class="sr-only">Leads disposed: {@todaydisposed}</span>
+                <span class="sr-only">Verifications for checking: {@todaydisposed}</span>
                 {@todaydisposedwidth}%
               </div>
             </div>
-            <label class="control-label">Contacted: {@todaycontacted}</label>
+            <label class="control-label">For document processing: {@todaycontacted}</label>
             <div class="progress">
               <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{@todaycontacted}" aria-valuemin="0" aria-valuemax="{@todaytotal}" style="width:{@todaycontactedwidth}%">
-                <span class="sr-only">Contacted: {@todaycontacted}</span>
+                <span class="sr-only">For document processing: {@todaycontacted}</span>
                 {@todaycontactedwidth}%
               </div>
             </div>
-            <label class="control-label">Uncontacted: {@todayuncontacted}</label>
+            <label class="control-label">Incomplete documents: {@todayuncontacted}</label>
             <div class="progress">
               <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{@todaycontacted}" aria-valuemin="0" aria-valuemax="{@todaytotal}" style="width:{@todayuncontactedwidth}%">
-                <span class="sr-only">Uncontacted: {@todayuncontacted}</span>
+                <span class="sr-only">Incomplete documents: {@todayuncontacted}</span>
                 {@todayuncontactedwidth}%
               </div>
             </div>
           </div>
 
           <div class="col-xs-6">
-            <label class="control-label">Verifications: {@todayverified}</label>
+            <label class="control-label">Reprocess: {@todayverified}</label>
             <div class="progress">
               <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{@todayverified}" aria-valuemin="0" aria-valuemax="25" style="width:{@todayverifiedwidth}%">
-                <span class="sr-only">Verifications: {@todayverified}</span>
+                <span class="sr-only">Reprocess: {@todayverified}</span>
                 {@todayverifiedwidth}%
               </div>
             </div>
@@ -61,7 +61,7 @@
           </div>
         </div>
         <div class="panel-footer">
-          <p align="right">Stats generated on {@todaydateupdated}. Report will be updated in {@todaynextupdate}.</p>
+          <p align="right">Report will be updated in 0 seconds.</p>
         </div>
       </div>
     </div>

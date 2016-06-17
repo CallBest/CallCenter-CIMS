@@ -80,6 +80,7 @@ input[type="checkbox"].cardchoice {
 	width:30px;
 	height:30px;
 	margin-left: 60px;
+	-moz-transform: scale(1.5);
 }
 
 label.cardchoicelabel {
@@ -166,4 +167,8 @@ input[required] {
 select[required] {
 	background: #ccccff;
 	border: 1px solid #369;
+}
+
+.margintop {
+    margin-top: 20px;
 }

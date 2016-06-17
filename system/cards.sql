@@ -163,12 +163,12 @@ insert into dispositions (dispoid,disposition,dispocode,livecall,sale,callback,f
 	(18,'Verified','VER',1,1,0,0,1,1),
 	(19,'Call Back','CBA',1,0,1,0,1,2),
 	(20,'For Document Processing','FDP',0,1,0,0,1,2),
-	(21,'Email Sent','EMAIL',0,1,0,0,1,2),
-	(22,'Fax Sent','FAXED',0,1,0,0,1,2),
-	(23,'Viber Sent','VIBER',0,1,0,0,1,2),
-	(24,'FB Messenger Sent','FBS',0,1,0,0,1,2),
-	(25,'Turn-In','TI',0,1,0,0,1,2),
-	(26,'Incomplete Documents','DOCINC',0,0,0,0,1,2)
+	(21,'Email Sent','EMAIL',0,1,0,0,1,3),
+	(22,'Fax Sent','FAXED',0,1,0,0,1,3),
+	(23,'Viber Sent','VIBER',0,1,0,0,1,3),
+	(24,'FB Messenger Sent','FBS',0,1,0,0,1,3),
+	(25,'Turn-In','TI',0,1,0,0,1,3),
+	(26,'Incomplete Documents','DOCINC',0,0,0,0,1,3)
 	;
 
 create table masterfile (
@@ -215,6 +215,7 @@ create table clientinfo (
 	pob varchar(100) not null default '',
 	civilstatus varchar(50) not null default '',
 	gender varchar(50) not null default '',
+	dependents varchar(10) not null default '',
 	citizenship varchar(100) not null default '',
 	mobilephone varchar(50) not null default '',
 	homephone varchar(50) not null default '',
@@ -307,6 +308,9 @@ create table clientinfo (
 	refaddress4 varchar(100) not null default '',
 	refzipcode varchar(50) not null default '',
 	refcontact varchar(50) not null default '',
+	prefdeliveryaddress varchar(20) not null default '',
+	prefdeliveryday varchar(20) not null default '',
+	prefdeliverytime varchar(20) not null default '',
 	primary key (recordid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -359,6 +363,8 @@ create table cardchoice (
 	mccsaveswap varchar(20) not null default '',
 	mccother varchar(20) not null default '',
 	rcbccardtype varchar(50) not null default '',
+	rcbcvisitday varchar(20) not null default '',
+	rcbcvisittime varchar(20) not null default '',
 	mpicardtype varchar(50) not null default '',
 	primary key (cardid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;

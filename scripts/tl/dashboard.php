@@ -5,37 +5,6 @@
   $dailytargetturnin = 8;
   $dailytargetapproval = 3;
 
-  require_once("includes/dbase.php");
-  require_once("includes/settings.php");
-  
-  $db = new dbconnection();
-  $db->dbconnect();
-  
-  $db->query = "
-    select * from " . TABLE_AGENTDASH . "
-    where agent=$userid and reporttype='Daily'
-    ";
-  $db->execute();
-  if  ($db->rowcount()==0) {
-    $db->query = "
-      insert into " . TABLE_AGENTDASH . " (agent,reporttype)
-      values ($userid,'Daily')
-      ";
-    $db->execute();
-    $db->query = "
-      select * from " . TABLE_AGENTDASH . "
-      where agent=$userid and reporttype='Daily'
-      ";
-    $db->execute();
-  }
-  $row = $db->fetchrow(0);
-  $now = Date("Y-m-d H:i:s");
-  $datenow = Date("Y-m-d");
-  $nextupdate = Date("Y-m-d H:i:s",mktime(Date("H"),Date("i")+10,Date("s"),Date("m"),Date("d"),Date("Y")));
-  $db->query = "
-    select 1
-    ";
-  $db->execute();
   $disposed = 0;
   $contacted = 0;
   $uncontacted = 0;
@@ -45,10 +14,6 @@
   $dateupdated = 'Nan';
   $nextupdate = 'Nan';
 
-  $db->query = "
-    select 'update'
-    ";
-  $db->execute();
 
   $currentdate = Date("l, F j, Y");
   $body->add_key('currentdate',$currentdate);

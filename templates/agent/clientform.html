@@ -306,6 +306,26 @@
               </div>
             </div>
             <div class="form-group">
+              <label for="dependents" class="col-sm-4 control-label">Dependents</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="dependents" name="dependents">
+                  <option value="{@dependents}">{@dependents}</option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="More than 10">More than 10</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
               <label for="citizenship" class="col-sm-4 control-label">Nationality/Citizenship</label>
               <div class="col-sm-6">
                 <select class="form-control" id="citizenship" name="citizenship">
@@ -359,6 +379,9 @@
               <div class="col-sm-2">
                 <input type="text" class="form-control" id="homezipcode" name="homezipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@homezipcode}">
               </div>
+              <div class="col-sm-4">
+                <a href="templates/agent/zipcode.htm">View Zip Codes</a>
+              </div>
             </div>
             <div class="form-group">
               <label for="permaddress1" class="col-sm-4 control-label">Permanent home address</label>
@@ -382,6 +405,9 @@
               <label class="col-sm-4 control-label"> </label>
               <div class="col-sm-2">
                 <input type="text" class="form-control" id="permzipcode" name="permzipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@permzipcode}">
+              </div>
+              <div class="col-sm-4">
+                <a href="templates/agent/zipcode.htm">View Zip Codes</a>
               </div>
             </div>
             <div class="form-group">
@@ -583,6 +609,9 @@
               <label class="col-sm-4 control-label"> </label>
               <div class="col-sm-2">
                 <input type="text" class="form-control" id="cozipcode" name="cozipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@cozipcode}">
+              </div>
+              <div class="col-sm-4">
+                <a href="templates/agent/zipcode.htm">View Zip Codes</a>
               </div>
             </div>
             <div class="form-group">
@@ -881,6 +910,9 @@
               <div class="col-sm-2">
                 <input type="text" class="form-control" id="spcozipcode" name="spcozipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@spcozipcode}">
               </div>
+              <div class="col-sm-4">
+                <a href="templates/agent/zipcode.htm">View Zip Codes</a>
+              </div>
             </div>
           </section>
           
@@ -930,6 +962,9 @@
               <label class="col-sm-4 control-label"> </label>
               <div class="col-sm-2">
                 <input type="text" class="form-control" id="supzipcode" name="supzipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@supzipcode}">
+              </div>
+              <div class="col-sm-4">
+                <a href="templates/agent/zipcode.htm">View Zip Codes</a>
               </div>
             </div>
             <div class="form-group">
@@ -1139,7 +1174,7 @@
             <div class="form-group">
               <label for="suptin" class="col-sm-4 control-label">Tax Identification Number</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" id="suptin" name="suptin" maxlength="9" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@suptin}" required placeholder="(9 digits)">
+                <input type="text" class="form-control" id="suptin" name="suptin" maxlength="9" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@suptin}" placeholder="(9 digits)">
               </div>
             </div>
             <div class="form-group">
@@ -1217,6 +1252,9 @@
               <div class="col-sm-2">
                 <input type="text" class="form-control" id="refzipcode" name="refzipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@refzipcode}">
               </div>
+              <div class="col-sm-4">
+                <a href="templates/agent/zipcode.htm">View Zip Codes</a>
+              </div>
             </div>
             <div class="form-group">
               <label for="refcontact" class="col-sm-4 control-label">Contact number</label>
@@ -1232,6 +1270,50 @@
               <h4>Credit Card Choices</h4>
               <hr/>
             </div>
+            <div class="form-group">
+              <label for="prefdelivery" class="col-sm-4 control-label">Prefered delivery address</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="prefdelivery" name="prefdelivery">
+                  <option value="{@prefdelivery}">{@prefdelivery}</option>
+                  <option value="Home">Home</option>
+                  <option value="Office">Office</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="prefdeliveryday" class="col-sm-4 control-label">Prefered delivery day</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="prefdeliveryday" name="prefdeliveryday">
+                  <option value="{@prefdeliveryday}">{@prefdeliveryday}</option>
+                  <option value="Sunday">Sunday</option>
+                  <option value="Monday">Monday</option>
+                  <option value="Tuesday">Tuesday</option>
+                  <option value="Wednesday">Wednesday</option>
+                  <option value="Thursday">Thursday</option>
+                  <option value="Firday">Firday</option>
+                  <option value="Saturday">Saturday</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="prefdeliverytime" class="col-sm-4 control-label">Prefered delivery time</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="prefdeliverytime" name="prefdeliverytime">
+                  <option value="{@prefdeliverytime}">{@prefdeliverytime}</option>
+                  <option value="8:00 AM">8:00 AM</option>
+                  <option value="9:00 AM">9:00 AM</option>
+                  <option value="10:00 AM">10:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="12:00 PM">12:00 PM</option>
+                  <option value="1:00 PM">1:00 PM</option>
+                  <option value="2:00 PM">2:00 PM</option>
+                  <option value="3:00 PM">3:00 PM</option>
+                  <option value="4:00 PM">4:00 PM</option>
+                  <option value="5:00 PM">5:00 PM</option>
+                </select>
+              </div>
+            </div>
+            <hr class="cardsep"/>
             <div class="form-group">
               <input type="checkbox" id="chinabank" name="chinabank" class="col-sm-1 cardchoice" value="checked" {@chinabank}>
               <label for="chinabank" class="col-sm-2 control-label underlined">China Bank</label>
@@ -1346,6 +1428,39 @@
                 </select>
               </div>
             </div>
+            <div class="form-group">
+              <label for="rcbcvisitday" class="col-sm-4 control-label">Best day to visit</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="rcbcvisitday" name="rcbcvisitday">
+                  <option value="{@rcbcvisitday}">{@rcbcvisitday}</option>
+                  <option value="Sunday">Sunday</option>
+                  <option value="Monday">Monday</option>
+                  <option value="Tuesday">Tuesday</option>
+                  <option value="Wednesday">Wednesday</option>
+                  <option value="Thursday">Thursday</option>
+                  <option value="Firday">Firday</option>
+                  <option value="Saturday">Saturday</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="rcbcvisittime" class="col-sm-4 control-label">Best time to visit</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="rcbcvisittime" name="rcbcvisittime">
+                  <option value="{@rcbcvisittime}">{@rcbcvisittime}</option>
+                  <option value="8:00 AM">8:00 AM</option>
+                  <option value="9:00 AM">9:00 AM</option>
+                  <option value="10:00 AM">10:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="12:00 PM">12:00 PM</option>
+                  <option value="1:00 PM">1:00 PM</option>
+                  <option value="2:00 PM">2:00 PM</option>
+                  <option value="3:00 PM">3:00 PM</option>
+                  <option value="4:00 PM">4:00 PM</option>
+                  <option value="5:00 PM">5:00 PM</option>
+                </select>
+              </div>
+            </div>
             <hr class="cardsep"/>
             <div class="form-group">
               <input type="checkbox" id="maybank" name="maybank" class="col-sm-2 cardchoice" value="checked" {@maybank}>
@@ -1387,14 +1502,14 @@
       <div class="col-xs-3 col-md-3">
         <p align="right">Disposition:</p>
         <p align="right">
-          <select class="form-control" id="disposition" name="disposition" required>
+          <select class="form-control" id="disposition" name="disposition" required {@disabledispo}>
             <option value="">
             <loop dispositions>
               <option value="{@disposition}">{@disposition}
             </loop dispositions>
           </select>
         </p>
-        <p align="right"><input type="submit" class="btn btn-success" value="Save" formnovalidate></p>
+        <p align="right"><input type="submit" class="btn btn-success" value="Save" formnovalidate {@disabledispo}></p>
       </div>
     </div>
     <hr class="spacer"/>

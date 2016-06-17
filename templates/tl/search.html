@@ -5,11 +5,26 @@
       <div class="panel panel-primary">
         <div class="panel-heading"><span class="glyphicon glyphicon-search"></span> Search Lead</div>
         <div class="panel-body">
-          <form class="form-horizontal" method="GET" action="{@mainpage}" onsubmit="return checkSearch();">
+          <form class="form-horizontal" method="GET" action="{@mainpage}" onsubmit="return checkSearchTL();">
             <div class="form-group">
               <label for="searchname" class="col-sm-4 control-label">Client name</label>
               <div class="col-sm-6">
                 <input type="text" class="form-control" id="searchname" name="searchname" maxlength="150" onkeyup="this.value=ValidCharsAlpha(this.value)"><br>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="searchtin" class="col-sm-4 control-label">TIN</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="searchtin" name="searchtin" maxlength="10" onkeyup="this.value=ValidCharsNumber(this.value)"><br>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="searchemail" class="col-sm-4 control-label">e-Mail</label>
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <span class="input-group-addon"> @ </span>
+                  <input type="text" class="form-control" id="searchemail" name="searchemail" maxlength="50" onkeyup="this.value=ValidCharsEmail(this.value)"><br>
+                </div>
               </div>
             </div>
             <div>

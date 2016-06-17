@@ -24,7 +24,11 @@
     $sort = 'completename';
   }
 //actual query
-  $db->query = "select * from " . TABLE_CLIENTS . " a inner join " . TABLE_LISTS . " b on (a.listid=b.listid) where disposition='$dispo' order by $sort limit $start, $end";
+  $db->query = "
+    select * from " . TABLE_CLIENTS . " a
+    inner join " . TABLE_LISTS . " b on (a.listid=b.listid)
+    inner join " . TABLE_USERS . " c on (a.agent=c.userid)
+    where disposition='$dispo' order by $sort limit $start, $end";
   $db->execute();
   
   $gridvalues = array();

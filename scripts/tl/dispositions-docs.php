@@ -1,5 +1,5 @@
 <?php
-$db->query = "select '' as disposition union select disposition from " . TABLE_DISPO . " where campaignid=2 and selectable=1";
+$db->query = "select '' as disposition union select disposition from " . TABLE_DISPO . " where campaignid=3 and selectable=1";
 $db->execute();
 $rowcount = $db->rowcount();
 if ($rowcount>0) {
