@@ -172,3 +172,7 @@ select[required] {
 .margintop {
     margin-top: 20px;
 }
+
+input[type=radio].toggle {
+	display: none;
+}

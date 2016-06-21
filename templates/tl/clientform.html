@@ -357,7 +357,8 @@
             <div class="form-group">
               <label for="permhomephone" class="col-sm-4 control-label">Permanent home phone</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" id="permhomephone" name="permhomephone" maxlength="20" placeholder="(Area code) (Phone number) e.g. 029148181" onkeyup="this.value=ValidCharsPhone(this.value)" value="{@permhomephone}">
+                <input type="text" class="form-control" id="permhomephone" name="permhomephone" maxlength="20" placeholder="(Area code) (Phone number) e.g. 029148181" onkeyup="this.value=ValidCharsPhone(this.value)" value="{@permhomephone}"><br>
+                <input type="checkbox" class="small-choices" id="samehomephone" name="samehomephone" onclick="if (this.checked==true) document.getElementById('permhomephone').value=document.getElementById('homephone').value;"><label for="samehomephone">Same as home phone</label>
               </div>
             </div>
             <div class="form-group">
@@ -372,7 +373,7 @@
             <div class="form-group">
               <label class="col-sm-4 control-label"> </label>
               <div class="col-sm-3">
-                <input type="text" class="form-control" id="homeaddress3" name="homeaddress3" maxlength="100" placeholder="City" onkeyup="this.value=ValidCharsAddressm(this.value)" value="{@homeaddress3}">
+                <input type="text" class="form-control" id="homeaddress3" name="homeaddress3" maxlength="100" placeholder="City" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@homeaddress3}">
               </div>
               <div class="col-sm-4">
                 <input type="text" class="form-control" id="homeaddress4" name="homeaddress4" maxlength="100" placeholder="Province" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@homeaddress4}">
@@ -389,6 +390,21 @@
             </div>
             <div class="form-group">
               <label for="permaddress1" class="col-sm-4 control-label">Permanent home address</label>
+              <div class="col-sm-6">
+                <input type="checkbox" class="small-choices" id="samehomeaddress" name="samehomeaddress"
+                onclick="if (this.checked==true) {
+                  document.getElementById('permaddress1').value=document.getElementById('homeaddress1').value;
+                  document.getElementById('permaddress2').value=document.getElementById('homeaddress2').value;
+                  document.getElementById('permaddress3').value=document.getElementById('homeaddress3').value;
+                  document.getElementById('permaddress4').value=document.getElementById('homeaddress4').value;
+                  document.getElementById('permzipcode').value=document.getElementById('homezipcode').value;
+                  }
+                  ">
+                <label for="samehomeaddress">Same as home address</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="permaddress1" class="col-sm-4 control-label"> </label>
               <div class="col-sm-3">
                 <input type="text" class="form-control" id="permaddress1" name="permaddress1" maxlength="100" placeholder="No. / Street" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@permaddress1}">
               </div>
@@ -580,6 +596,7 @@
                   <option value="Financial Institution">Financial Institution</option>
                   <option value="Food Industry">Food Industry</option>
                   <option value="Government Service">Government Service</option>
+                  <option value="Human Resources/Manpower Services">Human Resources/Manpower Services</option>                  
                   <option value="Manufacturing">Manufacturing</option>
                   <option value="Medical Services">Medical Services</option>
                   <option value="Mining">Mining</option>
@@ -874,6 +891,7 @@
                   <option value="Financial Institution">Financial Institution</option>
                   <option value="Food Industry">Food Industry</option>
                   <option value="Government Service">Government Service</option>
+                  <option value="Human Resources/Manpower Services">Human Resources/Manpower Services</option>
                   <option value="Manufacturing">Manufacturing</option>
                   <option value="Medical Services">Medical Services</option>
                   <option value="Mining">Mining</option>
@@ -1015,6 +1033,7 @@
                   <option value="Financial Institution">Financial Institution</option>
                   <option value="Food Industry">Food Industry</option>
                   <option value="Government Service">Government Service</option>
+                  <option value="Human Resources/Manpower Services">Human Resources/Manpower Services</option>
                   <option value="Manufacturing">Manufacturing</option>
                   <option value="Medical Services">Medical Services</option>
                   <option value="Mining">Mining</option>
@@ -1435,16 +1454,7 @@
             <div class="form-group">
               <label for="rcbcvisitday" class="col-sm-4 control-label">Best day to visit</label>
               <div class="col-sm-3">
-                <select class="form-control" id="rcbcvisitday" name="rcbcvisitday">
-                  <option value="{@rcbcvisitday}">{@rcbcvisitday}</option>
-                  <option value="Sunday">Sunday</option>
-                  <option value="Monday">Monday</option>
-                  <option value="Tuesday">Tuesday</option>
-                  <option value="Wednesday">Wednesday</option>
-                  <option value="Thursday">Thursday</option>
-                  <option value="Firday">Firday</option>
-                  <option value="Saturday">Saturday</option>
-                </select>
+                <input type="text" class="form-control" id="rcbcvisitday" name="rcbcvisitday" maxlength="10" value="{@rcbcvisitday}" placeholder="MM/DD/YY">
               </div>
             </div>
             <div class="form-group">
@@ -1463,6 +1473,33 @@
                   <option value="4:00 PM">4:00 PM</option>
                   <option value="5:00 PM">5:00 PM</option>
                 </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="visitaddress1" class="col-sm-4 control-label">Visit Address</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="rcbcvisitaddress1" name="rcbcvisitaddress1" maxlength="100" placeholder="No. / Street" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@rcbcvisitaddress1}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="rcbcvisitaddress2" name="rcbcvisitaddress2" maxlength="100" placeholder="Brgy. / Village" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@rcbcvisitaddress2}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="rcbcvisitaddress3" name="rcbcvisitaddress3" maxlength="100" placeholder="City" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@rcbcvisitaddress3}">
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="rcbcvisitaddress4" name="rcbcvisitaddress4" maxlength="100" placeholder="Province" onkeyup="this.value=ValidCharsAddress(this.value)" value="{@rcbcvisitaddress4}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label"> </label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="rcbcvisitzipcode" name="rcbcvisitzipcode" maxlength="4" placeholder="Zip Code" onkeyup="this.value=ValidCharsNumber(this.value)" value="{@rcbcvisitzipcode}">
+              </div>
+              <div class="col-sm-4">
+                <a href="templates/agent/zipcode.htm">View Zip Codes</a>
               </div>
             </div>
             <hr class="cardsep"/>

@@ -3,17 +3,63 @@
     var nextlink = 'agent.php?show={@workingfolder}&leadid=' + leadid;
     window.location = nextlink;
   }
+
+  $(document).ready(function(){
+    $(".btn-toggle").click(function(){
+      $(".btn-toggle").removeClass('btn-success');
+      $(this).addClass('btn-success');
+    });
+  });
 </script>
 
 <div class="container">
-  <div>
+  <div col-xs-4>
     <nav align="right">
-      <ul class="pagination pagination-sm">
-        <li><a href="?show={@workingfolder}&start={@prev}"><span class="glyphicon glyphicon-backward"></span> Previous</a></li>
-        <li><a href="?show={@workingfolder}&start={@next}">Next <span class="glyphicon glyphicon-forward"></span></a></li>
-      </ul>
+      <div>
+        <ul class="pagination pagination-sm">
+          <li><a href="?show={@workingfolder}&start={@prev}"><span class="glyphicon glyphicon-backward"></span> Previous</a></li>
+          <li><a href="?show={@workingfolder}&start={@next}">Next <span class="glyphicon glyphicon-forward"></span></a></li>
+        </ul>
+      </div>
     </nav>
   </div>
+  <form name="sortfilter" class="form-horizontal" action="agent.php" method="get">
+  <div class="input-group col-xs-12">
+      <input type="hidden" id="show" name="show" value="{@workingfolder}">
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-toggle" onclick="document.getElementById('appliedyes').checked=true;"><input type="radio" id="appliedyes" name="applied" value="checked" class="toggle"><span class="glyphicon glyphicon-check"></span></button>
+      </span>
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-toggle btn-success" onclick="document.getElementById('appliedno').checked=true;"><input type="radio" id="appliedno" name="applied" value="" class="toggle" checked><span class="glyphicon glyphicon-unchecked"></span></button>
+      </span>
+      <select class="form-control" id="appliedcard" name="appliedcard">
+        <option value=""></option>
+        <option value="chinabank">Chinabank</option>
+        <option value="eastwestbank">Eastwest Bank</option>
+        <option value="maybank">Maybank</option>
+        <option value="metrobank">Metrobank</option>
+        <option value="rcbc">RCBC</option>
+      </select>
+      <span class="input-group-addon">List filter</span>
+      <select class="form-control" id="listid" name="listid">
+        <option value=''></option>
+        <loop list>
+        <option value="{@listid}">{@listname}</option>
+        </loop list>
+      </select>
+      <span class="input-group-addon">Sort by</span>
+      <select class="form-control" id="sort" name="sort">
+        <option value="completename">Database Name</option>
+        <option value="a.leadid">Lead Id</option>
+        <option value="listname">List Name</option>
+        <option value="tagdate">Tag Date</option>
+        <option value="dateexpires">Date Expires</option>
+      </select>
+      <span class="input-group-btn">
+        <button class="btn btn-success" type="submit">Apply filters / sort</button>
+      </span>
+  </div>
+  </form>
   <div class="panel panel-primary">
     <table class="table table-condensed">
       <thead>

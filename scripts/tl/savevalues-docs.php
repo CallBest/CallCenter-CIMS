@@ -5,7 +5,7 @@ require_once('../../includes/dbase.php');
 
 function cleanstring($string) {
         $newstring = "";
-        $newstring = str_replace("'","'''",$string);
+        $newstring = str_replace("'","''",$string);
         $newstring = str_replace("--","_",$newstring);
         $newstring = strtoupper($newstring);
         $newstring = stripslashes($newstring);
@@ -28,6 +28,17 @@ $db->query = "
   where leadid=$leadid
   ";
 $db->execute();
+
+//verifications
+if (strtoupper($disposition)=='VERIFIED') {
+  $now = Date("Y-m-d");
+  $db->query = "
+    update ". TABLE_VER . "
+      set disposition='$disposition',tagdate='$now'
+      where leadid=$leadid
+    ";
+  $db->execute();
+}
 
 //turn-ins
 if (strtoupper($disposition)=='TURN-IN') {

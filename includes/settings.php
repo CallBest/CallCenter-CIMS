@@ -15,6 +15,7 @@ define('TABLE_CARDS','cards.cardchoice');
 define('TABLE_DISPO','cards.dispositions');
 define('TABLE_FILES','cards.docs');
 define('TABLE_PHONES','cards.phonenumbers');
+define('TABLE_EMAILACCOUNTS','cards.emailaccounts');
 define('TABLE_AGENTDASH','cards.agentdashboard');
 define('TABLE_VER','cards.verifications');
 define('TABLE_TURNIN','cards.turnins');

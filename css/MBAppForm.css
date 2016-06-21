@@ -1,0 +1,304 @@
+* {
+    margin:0px;
+    padding:0px;
+    font-family: Arial Narrow;
+    font-size:10px;
+}
+#main {
+    width: 1200px; height:900px; margin:0 auto;
+}
+.column1 {
+	float:left; width: 395px; height:900px;padding-left:5px;
+}
+.column23 {
+    float:right; height:870px; height:900px;
+}
+.column2 {
+    width:395px; height:900px; float:left; padding-left:5px;
+}
+.column3 {
+    width: 395px;height:870px;padding-left:5px;float:right;
+}
+input[type="text"] {
+	color: red;
+}
+
+.imagereference {
+	text-align:right; margin-right:16px;
+}
+.cclimit {
+	margin-left: 40px;
+}
+.ccmember {
+	margin-left:48px;
+}
+.cccompany {
+	margin-left: 10px;
+}
+.cccardnumber {
+	margin-left: 50px;
+}
+.creditlimit {
+	margin-left: 46px;
+}
+.cmembersince {
+	margin-left: 37px;
+}
+.lastname {
+	margin-left: 5px;
+}
+.firstname {
+	margin-left: 120px;
+}
+.middlename {
+	margin-left: 110px;
+}
+.tbl_sourcecode tr {
+	height:18px;
+}
+.tbl_sourcecode td {
+	width: 22px;
+}
+.info1 {
+	width: 395px; height: 55px; margin-top:5px;
+}
+.birthdate_status {
+	width:215px; height: 55px; float:left;  border-top:1px solid black; border-bottom:1px solid black;
+}
+.gender_nationality {
+	width:180px; height: 55px; float:right;  border-top:1px solid black; border-bottom:1px solid black;
+}
+.birthdate {
+	width:98px; height: 55px; float:left;  border-left:1px solid black; border-right:1px solid black; 
+}
+.status {
+	width:111px; height: 55px; float:right; border-right:1px solid black; padding-left: 3px;
+}
+.gender {
+	width:51px; height: 55px; float:left; border-right:1px solid black; padding-left: 3px;
+}
+.nationality {
+	width:121px; height: 55px; float:right; padding-left: 3px;border-right:1px solid black; 
+}
+.info2 {
+	width: 388px; height: 15px; border:1px solid black; border-top: 0px;padding-left:5px;padding-top:5px;
+}
+.info3 {
+	width: 393px; height: 25px; border:1px solid black;margin-top:5px;
+}
+
+.homeemail {
+	width: 191px; height: 25px; float:left; border-right:1px solid black; padding-left:5px;
+}
+.busineessemail {
+	width: 191px; height: 25px; float:right; padding-left:5px;
+}
+
+
+.spouseinfo1 {
+	width: 395px; height: 40px; 
+}
+.spousename {
+	width:295px; height: 40px; float:left;  
+}
+.spousedob {
+	width:100px; height: 40px; float:right;
+}
+.spouselastname {
+	margin-left: 5px;
+}
+.spousefirstname {
+	margin-left: 65px;
+}
+.spousemiddlename {
+	margin-left: 65px;
+}
+
+
+.supinfo1 {
+	width: 393px; height: 43px; border:1px solid black;
+}
+.suprel {
+	width: 162px; height:43px; float:left;  border-right:1px solid black; padding-left: 5px;
+}
+
+.supnationality {
+	width: 220px; height:43px; float:right; padding-left: 5px;
+}
+
+.supinfo2 {
+	width: 393px; height: 45px; border:1px solid black; margin-top:3px;
+}
+.supdob {
+	width: 125px; height: 43px; float:left; padding-top:3px; padding-left: 5px; border-right: 1px solid black;
+}
+.suppobgender {
+	width: 262px; height: 45px; float:right; 
+}
+.suppob {
+	width: 155px; height: 43px; float:left; border-right: 1px solid black;padding-left: 5px;padding-top:3px;
+}
+.supgender {
+	width: 96px; height: 43px; float:right; padding-left: 5px;padding-top:3px;
+}
+
+
+.supinfo3 {
+	width: 393px; height: 33px; border:1px solid black; margin-top:3px;
+}
+.supmobile {
+	width: 78px; height: 30px; float:left; padding-top:3px; padding-left: 3px; border-right: 1px solid black;
+}
+.suphomephonesuplimit {
+	width: 307px; height: 30px; float:right; 
+}
+.suphomephone {
+	width: 77px; height: 30px; float:left; border-right: 1px solid black;padding-left:3px;padding-top:3px;
+}
+.suplimit {
+	width: 221px; height: 33px; float:right; padding-left: 5px;padding-top:3px;
+}
+
+
+.declarationinfo {
+	width: 393px; height: 30px; border:1px solid black;margin-top:5px;
+}
+
+.signature1 {
+	width: 282px; height: 30px; float:left; border-right:1px solid black; padding-left:5px;
+}
+.date1 {
+	width: 100px; height: 30px; float:right; padding-left:5px;
+}
+
+.forbankonly {
+	width: 383px; height:375px; border:1px solid black;margin-top:5px; padding-left:10px;padding-top:5px;font-weight:normal; 
+}
+
+
+
+/*-- FOR THE MAIN TITLE --*/
+h3 { font-size: 13px; text-align:center; }
+.col1classmastercard { margin-top:5px; }
+.col1goldcard { margin-left: 50px; }
+.col1litemastercard {margin-left: 50px;}
+.col1goldvisa { margin-left: 79px; }
+.col1designcard {margin-left: 79px;}
+.col1imageref { border:0px;border-bottom:1px solid black;}
+.col1othercard_yes {margin-left:135px;}
+.col1othercard_no {margin-left:25px;}
+.saveswipe {display:inline-block;margin-top:10px;}
+.col1saveswipe_yes {margin-left:118px;}
+.col1saveswipe_no {margin-left:25px;}
+.ccissuer {font-weight:bold;}
+.col1mbcard1 {border:0px;border-bottom:1px solid black;}
+.col1cclimit1 {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col1membersince1 {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col1othercccard1 {border:0px;border-bottom:1px solid black;}
+.col1othercccard2 {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.personaldata {font-size:13px;font-weight:bold;margin-top:5px;}
+.col1txt_lastname {border:0px;border-bottom:1px solid black;}
+.col1txt_firstname { border:0px;border-bottom:1px solid black;margin-left:-2px;}
+.col1embossname {border-top:0px;margin-top:3px;}
+.col1embossname tr { height:18px;text-align:center;}
+.col1embossname td {width: 22px;}
+.col1birthdate {margin-left:3px;}
+.col1statsingle {margin-top:3px;}
+.col1statwidowed {margin-left:16px;}
+.col1statseparated {margin-left:8px;}
+.col1gendermale {margin-top:3px;margin-left: 4px;}
+.col1genderfemale {margin-left: 4px;}
+.col1nationalityfilipino {margin-top:3px;}
+.col1_txtnationalityothers {border:0px;border-bottom:1px solid black;margin-left:3px;height:10px;}
+.col1nationalitynote {font-size:8px;margin-right:3px;float:right;}
+.col1info2contactnum {border:0px;margin-left:3px;}
+.col1preadd {margin-top:6px;}
+.col1preadd1 {border:0px;border-bottom:1px solid black;}
+.col1preaddzipcdoe {margin-left:5px;}
+.col1txt_preaddzipcode {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col1permadd {margin-top:6px;}
+.col1permadd1 {border:0px;border-bottom:1px solid black;}
+.col1permaddphone {margin-left:5px;}
+.col1txt_permaddphone {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col1homeowner {margin-top:6px;}
+.col1homeowner_rented {margin-left:5px;}
+.col1stay {margin-left:13px;}
+.col1txt_stay {border:0px;border-bottom:1px solid black;margin-left:2px;}
+.col1carowner {margin-top:6px;}
+.col1txt_cars {border:0px;border-bottom:1px solid black;margin-left:2px;}
+.col1txt_modelyear {border:0px;border-bottom:1px solid black;margin-left:2px;}
+.col1educ { margin-left:15px;}
+.col1homeemail {border:0px;margin-left:2px;}
+.col1txt_momname {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col1sss {margin-left:180px;}
+.col1tabletin {border-top:0px;display:inline-block;margin-left:3px;margin-top:3px;text-align:center;}
+.col1tablesss {border-top:0px;display:inline-block;margin-left:15px;text-align:center;}
+.col1drivernum {border:0px;border-bottom:1px solid black;margin-left:2px;}
+.col1prcid {border:0px;border-bottom:1px solid black;margin-left:2px;}
+.col1identificationcards {font-size:8px;float:right;margin-right:5px;}
+.col1refname {border:0px;border-bottom:1px solid black;margin-left:3px;}
+.col1refadd {border:0px;border-bottom:1px solid black;margin-left:3px;margin-top:5px;}
+.col1redadd1 {border:0px;border-bottom:1px solid black;margin-left:3px;margin-top:5px;}
+.col1reftelnum {border:0px;border-bottom:1px solid black;margin-left:3px;}
+.col1pob {font-size:7px;margin-left:3px;}
+.col1txt_placebirth {border:0px;border-bottom:1px solid black;margin-left:3px;margin-top:-2px;}
+
+/*-- START FOR THE COLUMN 2 --*/
+
+.col2funds {font-size:13px;font-weight:bold;margin-top:5px;}
+.col2selfemployment {margin-left:35px;}
+.col2fundsother {margin-left:13px;}
+.col2retired {margin-left:10px;}
+.col2txt_otherfunds {border:0px;border-bottom:1px solid black;margin-left:35px;}
+.col2txt_comname {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col2txt_busadd {border:0px;border-bottom:1px solid black;}
+.col2txt_employeryears {border:0px;border-bottom:1px solid black;margin-left:3px;height:10px;}
+.col2txt_yearsworking {border:0px;border-bottom:1px solid black;margin-left:3px;}
+.col2employerstatus {margin-left:10px;}
+.col2financialstanding {font-size:13px;font-weight:bold;margin-top:-15px;display:inline-block;}
+.col2grossincome {display:inline-block;margin-top:-15px;margin-left:10px;}
+.col2txt_income {border:0px;margin-left:5px;}
+.col2spouse {font-size:13px;font-weight:bold;margin-top:5px;display:inline-block;}
+.col2txt_spousefname {border:0px;border-bottom:1px solid black;margin-top:15px;}
+.col2txt_spousemname {border:0px;border-bottom:1px solid black;margin-left:-2px;}
+.col2txt_comname {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col2txt_bus {border:0px;border-bottom:1px solid black;margin-left:0px;}
+.col2txt_zipcode {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col2supplementary {font-size:13px;font-weight:bold;margin-top:2px;}
+.col2txt_supfname {border:0px;border-bottom:1px solid black;}
+.col2txt_supmname {border:0px;border-bottom:1px solid black;margin-left:-2px;}
+.col2homeaddress {margin-top:2px;}
+.col2txt_homeadd {border:0px;border-bottom:1px solid black;}
+.col2sourcefunds {margin-top:2px;}
+.col2_employment {margin-left:10px;}
+.col2_self {margin-left:25px;}
+.col2_others {margin-left:15px;}
+.col2txt_others {border:0px;border-bottom:1px solid black;margin-left:40px;}
+.nob {margin-top:2px;display:inline-block;}
+.col2txt_nob {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col2txt_comname2 {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col2txt_suprel {border:0px;border-bottom:1px solid black;margin-left:5px;margin-top:10px;}
+.col2txt_nationality {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col2_nationalitynote {font-size:7px;font-weight:bold;margin-left:5px;}
+.col2txt_suppob {border:0px;border-bottom:1px solid black;margin-left:5px;margin-top:5px;}
+.col2supgender_male {margin-top:5px;}
+.col2supgender_female {margin-left:10px;}
+.col2supmobilephone {border:0px;border-bottom:1px solid black;margin-left:3px;}
+.col2suplimit {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col2delivery {font-size:13px;font-weight:bold;margin-top:5px;}
+.col2condo_yes {margin-left:10px;}
+.col2payment {font-size:13px;font-weight:bold;margin-top:5px;}
+.col2branch {border:0px;border-bottom:1px solid black;margin-left:5px;height:8px;}
+.col2_minimumdue {margin-left:25px;margin-top:2px;}
+.col2_totaldue {margin-left:25px;}
+
+
+/*-- START FOR THE COLUMN 3 --*/
+
+.declaration {font-size:13px;font-weight:bold;margin-top:5px;}
+.col2_declarationwaiver {font-size:9px;text-align:justify;}
+.col3_forbankonly {font-size:13px;font-weight:bold;margin-top:2px;}
+.col3txt_forbank {border:0px;border-bottom:1px solid black;margin-left:5px;}
+.col3_mbclient_yes{margin-left:15px;}
+.col3_mbclient_no{margin-left:5px;}
+.col3txt_branchremarks {border:0px;border-bottom:1px solid black;margin-left:5px;}

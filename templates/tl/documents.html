@@ -20,8 +20,105 @@
   section {
     padding: 20px 0 20px 0;
   }
+  .emailprompt {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    width: 0vw;
+    height: 80vh;
+    visibility: hidden;
+    z-index: 1;
+    background-color: lightyellow;
+    opacity: 0;
+    padding: 10px;
+  }
+  #modalbg {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    background-color: #000000;
+    opacity: 0;
+  }
 </style>
 <script>
+  function sendapp(apptype) {
+    var element = apptype+'emailprompt';
+    if (document.getElementById(element)==null) {
+      alert('No available email account configuration for the selected action.');
+    } else {
+      var prompt = '#'+apptype+'emailprompt';
+      $("#modalbg").css({'z-index':'9998','opacity':'0.2'});
+      $(prompt).css({'z-index':'9999','visibility': 'visible'});
+      $(prompt).animate({
+        'opacity':'1',
+        'width':'100vw'
+      }, 200);
+    }
+  }
+
+  function sendCancel(apptype) {
+    var prompt = '#'+apptype+'emailprompt';
+    $(prompt).animate({
+      'opacity':'0',
+      'width':'0vw',
+    }, 200, function(){
+      $("#modalbg").css({'z-index':'0','opacity':'0'});
+      $(prompt).css({'z-index':'1','visibility': 'hidden'});
+    });
+  }
+
+  function sendDraft(apptype) {
+    var ehost = document.getElementById(apptype+'emailhost').value;
+    var eport = document.getElementById(apptype+'emailport').value;
+    var euser = document.getElementById(apptype+'emailusername').value;
+    var epass = document.getElementById(apptype+'emailpassword').value;
+    var ename = document.getElementById(apptype+'emailname').value;
+    var ebody = document.getElementById(apptype+'msgbody').value;
+    var esubj = document.getElementById(apptype+'subject').value;
+    var ereci = document.getElementById(apptype+'recipient').value;
+    var attach = document.getElementById(apptype+'attachment').value;
+    $.ajax({
+      url : "scripts/tl/sendemail.php",
+      type : 'post',
+      data : "host="+ehost+"&port="+eport+"&user="+euser+"&pass="+epass+"&name="+ename+"&body="+ebody+"&subj="+esubj+"&reci="+ereci+"&attach="+attach,
+      traditional: true,
+      async : false,
+      //processData: false,  // tell jQuery not to process the data
+      //contentType: false,   // tell jQuery not to set contentType
+      error : function(request){
+        //$('#uploadstatus').append(request.responseText);
+      },
+      success : function(data){
+        alert(data);
+      }
+    });
+    sendCancel(apptype);
+  }
+
+  function reloadFiles(selector,leadid) {
+    $.ajax({
+      url : "scripts/tl/reloadfiles.php",
+      type : 'post',
+      data : "leadid="+leadid,
+      traditional: true,
+      async : false,
+      //processData: false,  // tell jQuery not to process the data
+      //contentType: false,   // tell jQuery not to set contentType
+      error : function(request){
+        //$('#uploadstatus').append(request.responseText);
+      },
+      success : function(data){
+        $('#'+selector)
+        .empty()
+        .append(data)
+        ;
+      }
+    });
+  }
+
   $(document).ready(function(){
     $('.tab-panel').scrollspy({ target: '#sidenav' });
     $(".nav-info a").on("click", function(){
@@ -53,8 +150,109 @@
         }
       });
     });
+
   });
 </script>
+<div id="modalbg"></div>
+<loop accounts>
+<div id="{@usedfor}emailprompt" class="emailprompt">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3><strong>Sending email to {@clfirstname} {@cllastname}</strong></h3>
+      </div>
+      <div class="form-group">
+        <label for="{@usedfor}emailhost" class="col-sm-4 control-label">Host</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <input type="text" class="form-control" id="{@usedfor}emailhost" name="{@usedfor}emailhost" maxlength="100" value="{@emailhost}" disabled>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" onclick="document.getElementById('{@usedfor}emailhost').disabled=!(document.getElementById('{@usedfor}emailhost').disabled);"><span class="glyphicon glyphicon-pencil"></span></button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="{@usedfor}emailport" class="col-sm-4 control-label">Port</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <input type="text" class="form-control" id="{@usedfor}emailport" name="{@usedfor}emailport" maxlength="100" value="{@emailport}" disabled>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" onclick="document.getElementById('{@usedfor}emailport').disabled=!(document.getElementById('{@usedfor}emailport').disabled);"><span class="glyphicon glyphicon-pencil"></span></button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="{@usedfor}emailusername" class="col-sm-4 control-label">Username</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <input type="text" class="form-control" id="{@usedfor}emailusername" name="{@usedfor}emailusername" maxlength="50" value="{@emailusername}" disabled>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" onclick="document.getElementById('{@usedfor}emailusername').disabled=!(document.getElementById('{@usedfor}emailusername').disabled);"><span class="glyphicon glyphicon-pencil"></span></button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="{@usedfor}emailpassword" class="col-sm-4 control-label">Password</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <input type="password" class="form-control" id="{@usedfor}emailpassword" name="{@usedfor}emailpassword" maxlength="50" value="{@emailpassword}" disabled>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" onclick="document.getElementById('{@usedfor}emailpassword').disabled=!(document.getElementById('{@usedfor}emailpassword').disabled);"><span class="glyphicon glyphicon-pencil"></span></button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="{@usedfor}emailname" class="col-sm-4 control-label">Sender's name (From:)</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="{@usedfor}emailname" name="{@usedfor}emailname" maxlength="50" value="{@emailname}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="{@usedfor}recipient" class="col-sm-4 control-label">Recipient (To:)</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="{@usedfor}recipient" name="{@usedfor}recipient" maxlength="50" value="{@email}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="{@usedfor}subject" class="col-sm-4 control-label">Subject</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="{@usedfor}subject" name="{@usedfor}subject" maxlength="50" value="{@emailname} Credit Card Requirements">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="{@usedfor}msgbody" class="col-sm-4 control-label">Message body</label>
+        <div class="col-sm-6">
+          <textarea type="text" class="form-control" id="{@usedfor}msgbody" name="{@usedfor}msgbody" rows="5">{@template}</textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="{@usedfor}attachment" class="col-sm-4 control-label">Attachment</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <select id="{@usedfor}attachment" name="{@usedfor}attachment" class="form-control"/>
+              <option value=''></option>
+            </select>
+            <button type="button" class="btn btn-default" onclick="reloadFiles('{@usedfor}attachment',{@leadid});"><span class="glyphicon glyphicon-refresh"></span></button>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-xs-2">
+        <button class="btn btn-danger" id="{@usedfor}sendCancel" class="sendCancel" onclick="sendCancel('{@usedfor}');">Cancel</button>
+      </div>
+      <div class="col-xs-2 col-xs-offset-8">
+        <button class="btn btn-success" id="{@usedfor}sendDraft" class="sendDraft" onclick="sendDraft('{@usedfor}');">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+</loop accounts>
 
 <div class="container">
   <div class="row">
@@ -62,20 +260,37 @@
       <h3><strong>{@completename}</strong></h3>
     </div>
     <div class="col-xs-6 margintop">
-      <div class="btn-group pull-right">
-        <button type="button" class="btn btn-primary">Print</button>
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="caret"></span>
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a href="#"><img src="images/cbc-logo.png"/> Chinabank Application Form</a></li>
-          <li><a href="#"><img src="images/ewb-logo.png"/> Eastwest Bank Application Form</a></li>
-          <li><a href="#"><img src="images/mcc-logo.png"/> Metrobank Application Form</a></li>
-          <li><a href="#"><img src="images/rcbc-logo.png"/> RCBC Application Form</a></li>
-          <li><a href="#"><img src="images/mpi-logo.png"/> Maybank Application Form</a></li>
-          <li role="separator" class="divider"></li>
-        </ul>
+      <div class="btn-group pull-right" role="group" aria-label="...">
+        <div class="btn-group pull-right" role="group">
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            View / Print
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li {@menucbc}><a href="javascript: printapp('chinabank');"><img src="images/cbc-logo.png"/> Chinabank Application Form</a></li>
+            <li {@menuewb}><a href="javascript: printapp('eastwestbank');"><img src="images/ewb-logo.png"/> Eastwest Bank Application Form</a></li>
+            <li {@menumcc}><a href="scripts/tl/MBAppForm.php?leadid={@leadid}" target="_blank"><img src="images/mcc-logo.png"/> Metrobank Application Form</a></li>
+            <li {@menurcbc}><a href="javascript: printapp('rcbc');"><img src="images/rcbc-logo.png"/> RCBC Application Form</a></li>
+            <li {@menumpi}><a href="javascript: printapp('maybank');"><img src="images/mpi-logo.png"/> Maybank Application Form</a></li>
+            <li role="separator" class="divider"></li>
+          </ul>
+        </div>
+      </div>
+      <div class="btn-group pull-right" role="group" aria-label="...">
+        <div class="btn-group pull-right" role="group">
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Send
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li {@menucbc}><a href="javascript: sendapp('chinabank');"><img src="images/cbc-logo.png"/> Chinabank Application Form</a></li>
+            <li {@menuewb}><a href="javascript: sendapp('eastwestbank');"><img src="images/ewb-logo.png"/> Eastwest Bank Application Form</a></li>
+            <li {@menumcc}><a href="javascript: sendapp('metrobank');"><img src="images/mcc-logo.png"/> Metrobank Application Form</a></li>
+            <li {@menurcbc}><a href="javascript: sendapp('rcbc');"><img src="images/rcbc-logo.png"/> RCBC Application Form</a></li>
+            <li {@menumpi}><a href="javascript: sendapp('maybank');"><img src="images/mpi-logo.png"/> Maybank Application Form</a></li>
+            <li role="separator" class="divider"></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -222,7 +437,6 @@
       <p align="right">Disposition:</p>
       <p align="right">
         <select class="form-control" id="disposition" name="disposition" required>
-          <option value="">
           <loop dispositions>
             <option value="{@disposition}">{@disposition}
           </loop dispositions>

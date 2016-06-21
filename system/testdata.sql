@@ -51,3 +51,10 @@ insert into cards.masterfile (leadid,completename,phone,listid)
 	(49,'Test Data 49','9078843/09175635050/9148182',1),
 	(50,'Test Data 50','9078843/09175635050/9148182',1)
 	;
+
+insert into emailaccounts (accountid,userid,usedfor,emailname,emailusername,emailpassword,emailhost,emailport)
+	values
+	(1,4,'rcbc','RCBC Email Autosender','marlonreyes.callbest@gmail.com','chocobo09?','smtp.gmail.com',587),
+	(2,4,'metrobank','Metrobank Email Autosender','marlonreyes.callbest@gmail.com','chocobo09?','smtp.gmail.com',587),
+	(3,4,'eastwestbank','Eastwest Bank Email Autosender','marlonreyes.callbest@gmail.com','chocobo09?','smtp.gmail.com',587)
+	;

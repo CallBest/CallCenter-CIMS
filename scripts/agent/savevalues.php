@@ -186,9 +186,9 @@ if (strtoupper($disposition)=='VERIFIED') {
   }
   $db->query = "
   insert into ". TABLE_FILES . "
-    (leadid,filename,doctype,dateuploaded,agent)
+    (leadid,filename,dateuploaded,agent)
     values
-    ($leadid,'','','0000-00-00',0)
+    ($leadid,'','0000-00-00',0)
     on duplicate key update
     leadid=$leadid 
   ";
@@ -198,13 +198,18 @@ if (strtoupper($disposition)=='VERIFIED') {
 //phonenumbers
 $db->query = "select leadid,phonenumber from ". TABLE_PHONES ." where leadid=$leadid";
 $db->execute();
+$queries = array();
 $rowcount = $db->rowcount();
 for ($x=0; $x < $rowcount; $x++) {
   $row = $db->fetchrow($x);
   $phonenum = $row['phonenumber'];
-  $db->query = "update ". TABLE_PHONES ." set disposition='".$_REQUEST[$phonenum]."',tagdate=now() where leadid=$leadid and phonenumber='$phonenum'";
+  $queries[$x] = "update ". TABLE_PHONES ." set disposition='".$_REQUEST[$phonenum]."',tagdate=now() where leadid=$leadid and phonenumber='$phonenum'";
+}
+foreach ($queries as $key=>$value) {
+  $db->query = $value;
   $db->execute();
 }
+
 
 //cardchoice
 $datafields = array (
@@ -227,6 +232,11 @@ $datafields = array (
   ,'rcbccardtype'
   ,'rcbcvisitday'
   ,'rcbcvisittime'
+  ,'rcbcvisitaddress1'
+  ,'rcbcvisitaddress2'
+  ,'rcbcvisitaddress3'
+  ,'rcbcvisitaddress4'
+  ,'rcbcvisitzipcode'
   ,'mpicardtype'
 );
 

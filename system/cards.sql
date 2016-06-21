@@ -35,11 +35,11 @@ insert into usertypes (usertype,usertypedesc) values (4,'Group Head');
 insert into usertypes (usertype,usertypedesc) values (5,'IT Staff');
 
 insert into users (userid,username,password,firstname,lastname,usertype,datecreated,teamid)
-	values (1,'itstaff','1aZyZ8h16O2TU','IT','Staff',5,now(),1),
-	(2,'grouphead','1aZyZ8h16O2TU','Group','Head',4,now(),2),
-	(3,'docsclerk','1aZyZ8h16O2TU','Documents','Clerk',3,now(),3),
-	(4,'teamleader','1aZyZ8h16O2TU','Team','Leader',2,now(),4),
-	(5,'agent','1aZyZ8h16O2TU','Account','Specialist',1,now(),5)	
+	values (1,'itstaff','1aZyZ8h16O2TU','IT','Staff',5,now(),999),
+	(2,'grouphead','1aZyZ8h16O2TU','Group','Head',4,now(),999),
+	(3,'docsclerk','1aZyZ8h16O2TU','Documents','Clerk',3,now(),999),
+	(4,'teamleader','1aZyZ8h16O2TU','Team','Leader',2,now(),999),
+	(5,'agent','1aZyZ8h16O2TU','Account','Specialist',1,now(),999)	
 	;
 
 create table userlogs (
@@ -76,11 +76,7 @@ create table teams (
 
 insert into teams (teamid,teamname,active)
 	values
-	(1,'Administrators',1),
-	(2,'Group Heads',1),
-	(3,'Documentation Clerks',1),
-	(4,'Team Leaders',1),
-	(5,'Agents',1)
+	(999,'Default Team',1)
 	;
 
 create table phonenumbers (
@@ -168,7 +164,8 @@ insert into dispositions (dispoid,disposition,dispocode,livecall,sale,callback,f
 	(23,'Viber Sent','VIBER',0,1,0,0,1,3),
 	(24,'FB Messenger Sent','FBS',0,1,0,0,1,3),
 	(25,'Turn-In','TI',0,1,0,0,1,3),
-	(26,'Incomplete Documents','DOCINC',0,0,0,0,1,3)
+	(26,'Incomplete Documents','DOCINC',0,0,0,0,1,3),
+	(27,'Verified','Verified',1,1,0,0,1,3)
 	;
 
 create table masterfile (
@@ -365,6 +362,11 @@ create table cardchoice (
 	rcbccardtype varchar(50) not null default '',
 	rcbcvisitday varchar(20) not null default '',
 	rcbcvisittime varchar(20) not null default '',
+	rcbcvisitaddress1 varchar(100) not null default '',
+  rcbcvisitaddress2 varchar(100) not null default '',
+  rcbcvisitaddress3 varchar(100) not null default '',
+  rcbcvisitaddress4 varchar(100) not null default '',
+  rcbcvisitzipcode varchar(10) not null default '',
 	mpicardtype varchar(50) not null default '',
 	primary key (cardid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
@@ -409,4 +411,16 @@ create table appcandec (
 	disposition varchar(50) not null default '',
 	tagdate date not null default '0000-00-00',
 	primary key (acdid)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+create table emailaccounts (
+	accountid int(11) not null auto_increment,
+	userid int(11) not null default 0,
+	usedfor varchar(50) not null default '',
+	emailname varchar(50) not null default '',
+	emailusername varchar(50) not null default '',
+	emailpassword varchar(50) not null default '',
+	emailhost varchar(50) not null default '',
+	emailport smallint(3) unsigned not null default 0,
+	primary key (accountid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;

@@ -5,8 +5,8 @@ require_once('../../includes/dbase.php');
 
 function cleanstring($string) {
         $newstring = "";
-        $newstring = str_replace("'","'''",$string);
-        $newstring = str_replace("--","_",$string);
+        $newstring = str_replace("'","''",$string);
+        $newstring = str_replace("--","_",$newstring);
         $newstring = strtoupper($newstring);
         $newstring = stripslashes($newstring);
         return $newstring;
@@ -16,7 +16,6 @@ $workingfolder = cleanstring($_REQUEST['workingfolder']);
 $agent = cleanstring($_REQUEST['agent']);
 $disposition = cleanstring($_REQUEST['disposition']);
 $remarks = cleanstring($_REQUEST['remarks']);
-$remarks = preg_replace("/'/", "\&#39;", $remarks);
 $leadid = cleanstring($_REQUEST['leadid']);
 
 $datafields = array (
@@ -160,7 +159,7 @@ $db->query = "
 $db->execute();
 
 //verifications
-if (strtoupper($disposition)=='VERIFIED') {
+if (strtoupper($disposition)=='CALL BACK') {
   $now = Date("Y-m-d");
   $db->query = "
     update ". TABLE_VER . "
@@ -170,16 +169,33 @@ if (strtoupper($disposition)=='VERIFIED') {
   $db->execute();
 }
 
-
+//turn-ins
+if (strtoupper($disposition)=='TURN-IN') {
+  $now = Date("Y-m-d");
+  $db->query = "
+    insert into ". TABLE_TURNIN . "
+      (leadid,disposition,tagdate)
+      values
+      ($leadid,'$disposition',now())
+      on duplicate key update 
+        disposition='$disposition',
+        tagdate='$now'
+    ";
+  $db->execute();
+}
 
 //phonenumbers
 $db->query = "select leadid,phonenumber from ". TABLE_PHONES ." where leadid=$leadid";
 $db->execute();
+$queries = array();
 $rowcount = $db->rowcount();
 for ($x=0; $x < $rowcount; $x++) {
   $row = $db->fetchrow($x);
   $phonenum = $row['phonenumber'];
-  $db->query = "update ". TABLE_PHONES ." set disposition='".$_REQUEST[$phonenum]."',tagdate=now() where leadid=$leadid and phonenumber='$phonenum'";
+  $queries[$x] = "update ". TABLE_PHONES ." set disposition='".$_REQUEST[$phonenum]."',tagdate=now() where leadid=$leadid and phonenumber='$phonenum'";
+}
+foreach ($queries as $key=>$value) {
+  $db->query = $value;
   $db->execute();
 }
 
@@ -204,6 +220,11 @@ $datafields = array (
   ,'rcbccardtype'
   ,'rcbcvisitday'
   ,'rcbcvisittime'
+  ,'rcbcvisitaddress1'
+  ,'rcbcvisitaddress2'
+  ,'rcbcvisitaddress3'
+  ,'rcbcvisitaddress4'
+  ,'rcbcvisitzipcode'
   ,'mpicardtype'
 );
 
